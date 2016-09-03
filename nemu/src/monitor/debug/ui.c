@@ -38,9 +38,11 @@ static int cmd_q(char *args) {
 
 static int cmd_help(char *args);
 
-static int cmd_si(char *args) ;
+static int cmd_si(char *args);
 
-static int cmd_info(char *args) ;
+static int cmd_info(char *args);
+
+static int cmd_x(char *args);
 
 static struct {
 	char *name;
@@ -52,6 +54,7 @@ static struct {
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si", "Execute single step", cmd_si },
 	{ "info", "Print the information about registers and watchpoint", cmd_info },
+	{ "x", "scan the memory", cmd_x },
 	/* TODO: Add more commands */
 
  };
@@ -98,44 +101,58 @@ static int cmd_si(char *args){
 static int cmd_info(char *args){
 	char buf[5];
 	int pan=sscanf(args,"%s",buf);
-	if(pan==-1)
+	if(pan==1)
 	{
-		printf("Unknown command '%s'\n",args);
-		return 0;
+		if(strcmp(buf,"r")==0)
+		{
+			printf("eax          %u\n",cpu.eax);
+			printf("ecx          %u\n",cpu.ecx);
+			printf("edx          %u\n",cpu.edx);
+			printf("ebx          %u\n",cpu.ebx);
+			printf("esp          %u\n",cpu.esp);
+			printf("ebp          %u\n",cpu.ebp);
+			printf("esi          %u\n",cpu.esi);
+			printf("edi          %u\n",cpu.edi);
+		}
+		else if (strcmp(buf,"w")==0)
+			{
+				printf("ok");
+			}
+		else
+			{
+				printf("Unknown command info '%s'\n",args);
+			}
 	}
 	else
 	{
-		if(pan==1)
-		{
-			if(strcmp(buf,"r")==0)
-			{
-				printf("eax          %u\n",cpu.eax);
-				printf("ecx          %u\n",cpu.ecx);
-				printf("edx          %u\n",cpu.edx);
-				printf("ebx          %u\n",cpu.ebx);
-				printf("esp          %u\n",cpu.esp);
-				printf("ebp          %u\n",cpu.ebp);
-				printf("esi          %u\n",cpu.esi);
-				printf("edi          %u\n",cpu.edi);
-			}
-			else if (strcmp(buf,"w")==0)
-					{
-						printf("ok");
-					}
-			else
-			{
-				printf("Unknown command '%s'\n",args);
-				return 0;
-			}
-		}
-		else
-		{
-			printf("Unknown command '%s'\n",args);
-			return 0;
-		}
+		printf("Unknown command info '%s'\n",args);
+		return 0;
 	}
 	return 0;	
 }		
+
+static int cmd_x(char *args){
+	int n;
+	uint32_t addr;
+	int *p;
+	int i;
+	int pan=sscanf(args,"%d%u",&n,&addr);
+	if(pan==2)
+	{
+		for(i=0;i<n;i++)
+		{
+			addr=addr+i*32;
+			p=(int*)addr;
+			printf("%d   ",*p);
+		}
+	}
+	else
+	{
+		printf("Unknown command x '%s'\n",args);
+	}
+	return 0;
+}
+
 void ui_mainloop() {
  	while(1) {
 		char *str = rl_gets();
