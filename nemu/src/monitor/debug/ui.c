@@ -137,7 +137,7 @@ static int cmd_x(char *args){
 	int i;
 	char buf[8];
 	int pan=sscanf(args,"%d%s%x",&n,buf,&addr);
-	printf("%u\n",addr);
+	printf("%s %d\n",buf,addr);
 	if(pan==2)
 	{
 		for(i=0;i<n;i++)
