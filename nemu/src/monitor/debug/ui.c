@@ -138,11 +138,11 @@ static int cmd_x(char *args){
 	int pan=sscanf(args,"%d%u",&n,&addr);
 	if(pan==2)
 	{
-		unsigned char *p=(unsigned char*)addr;
+		//unsigned char *p=(unsigned char*)addr;
 		for(i=0;i<n;i++)
 		{
 			addr=addr+i*32;	
-			printf("%4X   ",p[i]);
+		//	printf("%4X   ",p[i]);
 		}
 	}
 	else
