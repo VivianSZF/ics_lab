@@ -136,16 +136,12 @@ static int cmd_x(char *args){
 	uint32_t addr;
 	int i;
 	int pan=sscanf(args,"%d%u",&n,&addr);
-	int *p;
-	p=(int*)0x100000;
-	printf("%x\n",*p);
 	if(pan==2)
 	{
-		//unsigned char *p=(unsigned char*)addr;
 		for(i=0;i<n;i++)
 		{
 			addr=addr+i*32;	
-		//	printf("%4X   ",p[i]);
+			printf("%x   ",swaddr_read(addr,4));
 		}
 	}
 	else
