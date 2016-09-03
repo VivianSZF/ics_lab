@@ -83,10 +83,10 @@ static struct {
 
 static int cmd_si(char *args){
 	uint32_t n;
-	int pan=sscanf(args,"%u",&n);
-	if(pan==-1)
+	if(args==NULL)
 			cpu_exec(1);
 	else{
+		int pan=sscanf(args,"%u",&n);
 		if(pan==1)
 			cpu_exec(n);
 		else
