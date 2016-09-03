@@ -140,7 +140,7 @@ static int cmd_x(char *args){
 	{
 		for(i=0;i<n;i++)
 		{
-			addr=addr+i*32;	
+			addr=addr+32;	
 			printf("%x   ",swaddr_read(addr,4));
 		}
 	}
