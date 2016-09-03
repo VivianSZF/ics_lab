@@ -83,26 +83,21 @@ static struct {
 
 static int cmd_si(char *args){
 	uint32_t n;
-	int pan=sscanf(args,"%*s%u",&n);
+	int pan=sscanf(args,"%u",&n);
 	if(pan==-1)
-	{
-		if(strcmp(args,"si")==0)
 			cpu_exec(1);
-		else
-			printf("Unknown command '%s'\n",args);
- 	}
 	else{
 		if(pan==1)
 			cpu_exec(n);
 		else
-			printf("Unknown command '%s'\n",args);	
+			printf("Unknown command si '%s'\n",args);	
  	}
 	return 0;
 } 
 
 static int cmd_info(char *args){
 	char buf[5];
-	int pan=sscanf(args,"%*s%s",buf);
+	int pan=sscanf(args,"%s",buf);
 	if(pan==-1)
 	{
 		printf("Unknown command '%s'\n",args);
