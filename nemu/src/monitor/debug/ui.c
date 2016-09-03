@@ -40,7 +40,7 @@ static int cmd_help(char *args);
 
 static int cmd_si(char *args) ;
 
-//static int cmd_info(char *args) ;
+static int cmd_info(char *args) ;
 
 static struct {
 	char *name;
@@ -51,10 +51,10 @@ static struct {
 	{ "c", "Continue the execution of the program", cmd_c },
 	{ "q", "Exit NEMU", cmd_q },
 	{ "si", "Execute single step", cmd_si },
-//	{ "info", "Print the information about registers and watchpoint", cmd_info },
+	{ "info", "Print the information about registers and watchpoint", cmd_info },
 	/* TODO: Add more commands */
 
-};
+ };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
@@ -67,19 +67,19 @@ static struct {
 		/* no argument given */
 		for(i = 0; i < NR_CMD; i ++) {
 			printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
- 		}
- 	}
+  		}
+  	}
 	else {
 		for(i = 0; i < NR_CMD; i ++) {
 			if(strcmp(arg, cmd_table[i].name) == 0) {
 				printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
 				return 0;
- 			}
- 		}
+  			}
+  		}
 		printf("Unknown command '%s'\n", arg);
- 	}
+  	}
 	return 0;
-}
+ }
 
 static int cmd_si(char *args){
 	uint32_t n;
@@ -90,18 +90,59 @@ static int cmd_si(char *args){
 			cpu_exec(1);
 		else
 			printf("Unknown command '%s'\n",args);
-	}
+ 	}
 	else{
 		if(pan==1)
 			cpu_exec(n);
 		else
 			printf("Unknown command '%s'\n",args);	
-	}
+ 	}
 	return 0;
-}
+} 
 
+static int cmd_info(char *args){
+	char buf[5];
+	int pan=sscanf(args,"%*s%s",buf);
+	if(pan==-1)
+	{
+		printf("Unknown command '%s'\n",args);
+		return 0;
+	}
+	else
+	{
+		if(pan==1)
+		{
+			if(strcmp(buf,"r")==0)
+			{
+				printf("eax          %u\n",cpu.eax);
+				printf("ecx          %u\n",cpu.ecx);
+				printf("edx          %u\n",cpu.edx);
+				printf("ebx          %u\n",cpu.ebx);
+				printf("esp          %u\n",cpu.esp);
+				printf("ebp          %u\n",cpu.ebp);
+				printf("esi          %u\n",cpu.esi);
+				printf("edi          %u\n",cpu.edi);
+			}
+			else if (strcmp(buf,"w")==0)
+					{
+						printf("ok");
+					}
+			else
+			{
+				printf("Unknown command '%s'\n",args);
+				return 0;
+			}
+		}
+		else
+		{
+			printf("Unknown command '%s'\n",args);
+			return 0;
+		}
+	}
+	return 0;	
+}		
 void ui_mainloop() {
-	while(1) {
+ 	while(1) {
 		char *str = rl_gets();
 		char *str_end = str + strlen(str);
 
@@ -111,11 +152,11 @@ void ui_mainloop() {
 
 		/* treat the remaining string as the arguments,
 		 * which may need further parsing
-		 */
+ 		 */
 		char *args = cmd + strlen(cmd) + 1;
 		if(args >= str_end) {
 			args = NULL;
-		}
+ 		}
 
 #ifdef HAS_DEVICE
 		extern void sdl_clear_event_queue(void);
