@@ -147,8 +147,8 @@ static int cmd_x(char *args){
 	{
 		for(i=0;i<n;i++)
 		{
-			printf("%x   ",swaddr_read(addr,2));
-			addr=addr+32;
+			printf("%x   ",swaddr_read(addr,4));
+			addr=addr+2;
 		}
 	}
 	else
