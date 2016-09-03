@@ -136,6 +136,7 @@ static int cmd_x(char *args){
 	uint32_t addr;
 	int i;
 	int pan=sscanf(args,"%d%u",&n,&addr);
+	printf("%x\n",addr);
 	if(pan==2)
 	{
 		for(i=0;i<n;i++)
