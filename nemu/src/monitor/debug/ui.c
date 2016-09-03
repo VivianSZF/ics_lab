@@ -142,7 +142,7 @@ static int cmd_x(char *args){
 		for(i=0;i<n;i++)
 		{
 			addr=addr+i*32;
-			p=(int*)addr;
+			p=(int*)0x100000;
 			printf("%d   ",*p);
 		}
 	}
