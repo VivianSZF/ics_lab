@@ -93,7 +93,7 @@ static int cmd_si(char *args){
 		if(pan==1)
 			cpu_exec(n);
 		else
-			printf("Unknown command si '%s'\n",args);	
+			printf("Unknown command 'si %s'\n",args);	
  	}
 	return 0;
 } 
@@ -119,36 +119,35 @@ static int cmd_info(char *args){
 				printf("ok");
 			}
 		else
-			{
-				printf("Unknown command info '%s'\n",args);
+	 		{
+				printf("Unknown command 'info %s'\n",args);
 			}
-	}
+ 	}
 	else
 	{
-		printf("Unknown command info '%s'\n",args);
+		printf("Unknown command 'info %s'\n",args);
 		return 0;
-	}
+ 	}
 	return 0;	
-}		
+}	 	
 
 static int cmd_x(char *args){
 	int n;
 	uint32_t addr;
-	int *p;
 	int i;
 	int pan=sscanf(args,"%d%u",&n,&addr);
 	if(pan==2)
 	{
+		unsigned char *p=(unsigned char*)addr;
 		for(i=0;i<n;i++)
 		{
-			addr=addr+i*32;
-			p=(int*)0x100000;
-			printf("%d   ",*p);
+			addr=addr+i*32;	
+			printf("%4X   ",p[i]);
 		}
 	}
 	else
 	{
-		printf("Unknown command x '%s'\n",args);
+		printf("Unknown command 'x %s'\n",args);
 	}
 	return 0;
 }
