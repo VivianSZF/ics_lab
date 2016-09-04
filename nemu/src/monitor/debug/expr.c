@@ -7,8 +7,8 @@
 #include <regex.h>
 
 enum {
-	NOTYPE = 256, EQ
-
+	NOTYPE = 256, EQ, D  //, '+', '-', '*', '/', '(', ')'???????????????????????????????????
+	
 	/* TODO: Add more token types */
 
 };
@@ -24,7 +24,13 @@ static struct rule {
 
 	{" +",	NOTYPE},				// spaces
 	{"\\+", '+'},					// plus
-	{"==", EQ}						// equal
+	{"==", EQ},						// equal
+	{"\\-", '-'},                    //minus
+	{"\\*", '*'},                    //mutiply
+	{"\\/", '/'},                    //divide
+	{"\\(", '('},				    //zuokuohao
+	{"\\)", ')'},                    //youkuohao
+	{"[0-9]", D}                    //digit
 };
 
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -73,12 +79,55 @@ static bool make_token(char *e) {
 				Log("match rules[%d] = \"%s\" at position %d with len %d: %.*s", i, rules[i].regex, position, substr_len, substr_len, substr_start);
 				position += substr_len;
 
+				
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				 * to record the token in the array `tokens'. For certain types
 				 * of tokens, some extra actions should be performed.
 				 */
 
 				switch(rules[i].token_type) {
+					case NOTYPE:
+						break;
+					case EQ:
+						strcpy("==",tokens[nr_token].str);
+						tokens[nr_token].type=EQ;
+						nr_token++;
+						break;
+					case '+':
+						strcpy("+",tokens[nr_token].str);
+						tokens[nr_token].type='+';
+						nr_token++;
+						break;
+					case '-':
+						strcpy("-",tokens[nr_token].str);
+						tokens[nr_token].type='-';
+						nr_token++;
+						break;
+					case '*':
+						strcpy("*",tokens[nr_token].str);
+						tokens[nr_token].type='*';
+						nr_token++;
+						break;
+					case '/':
+						strcpy("/",tokens[nr_token].str);
+						tokens[nr_token].type='/';
+						nr_token++;
+						break;
+					case '(':
+						strcpy("(",tokens[nr_token].str);
+						tokens[nr_token].type='(';
+						nr_token++;
+						break;
+					case ')':
+						strcpy(")",tokens[nr_token].str);
+						tokens[nr_token].type=')';
+						nr_token++;
+						break;
+					case D:
+						strcpy(substr_start,tokens[nr_token].str);//??????????????????????????????? 
+						tokens[nr_token].type=D;
+						nr_token++;
+						break;
 					default: panic("please implement me");
 				}
 
