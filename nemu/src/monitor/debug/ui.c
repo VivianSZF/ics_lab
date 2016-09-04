@@ -146,12 +146,18 @@ static int cmd_x(char *args){
 	}
 	sscanf(buf,"%x",&addr);
 	i=0;
+	int t=0;
 	if(pan==2)
 	{
 		for(i=0;i<n;i++)
 		{
+			if(t==0||t%4==0)
+				printf("0x%x:   ",addr);
 			printf("0x%08x   ",swaddr_read(addr,4));
 			addr=addr+5;
+			t++;
+			if(t%4==0)
+				printf("\n");
 		}
 	}
 	else
