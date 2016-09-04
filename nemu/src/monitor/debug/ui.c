@@ -159,6 +159,7 @@ static int cmd_x(char *args){
 			if(t%4==0)
 				printf("\n");
 		}
+		if(n%4!=0) printf("\n");
 	}
 	else
 	{
