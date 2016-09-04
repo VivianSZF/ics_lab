@@ -148,7 +148,7 @@ static int cmd_x(char *args){
 		for(i=0;i<n;i++)
 		{
 			printf("%x   ",swaddr_read(addr,4));
-			addr=addr+4;
+			addr=addr+5;
 		}
 	}
 	else
