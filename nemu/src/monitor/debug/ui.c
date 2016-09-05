@@ -44,6 +44,9 @@ static int cmd_info(char *args);
 
 static int cmd_x(char *args);
 
+static int cmd_p(char *args);
+
+
 static struct {
 	char *name;
 	char *description;
@@ -55,6 +58,7 @@ static struct {
 	{ "si", "Execute single step", cmd_si },
 	{ "info", "Print the information about registers and watchpoint", cmd_info },
 	{ "x", "scan the memory", cmd_x },
+	{ "p", "evaluate the expression", cmd_p},
 	/* TODO: Add more commands */
 
  };
@@ -166,6 +170,12 @@ static int cmd_x(char *args){
 	{
 		printf("Unknown command 'x %s'\n",args);
 	}
+	return 0;
+}
+
+static int cmd_p(char *args){
+	bool pan=true;
+	printf("%u\n",expr(args, &pan));
 	return 0;
 }
 
