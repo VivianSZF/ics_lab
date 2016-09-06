@@ -12,6 +12,8 @@
 int nemu_state = STOP;
 
 int exec(swaddr_t);
+bool check_wp();
+
 
 char assembly[80];
 char asm_buf[128];
@@ -73,7 +75,9 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		/* TODO: check watchpoints here. */
-
+		if(check_wp()){
+			nemu_state=STOP;
+		}
 
 #ifdef HAS_DEVICE
 		extern void device_update();

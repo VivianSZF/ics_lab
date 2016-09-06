@@ -6,9 +6,9 @@
 static WP wp_pool[NR_WP];
 static WP *head, *free_;
 
-void init_wp_pool() {
+ void init_wp_pool() {
 	int i;
- 	for(i = 0; i < NR_WP; i ++) {
+  	for(i = 0; i < NR_WP; i ++) {
 		wp_pool[i].NO = i;
 		wp_pool[i].next = &wp_pool[i + 1];
 	}
@@ -29,7 +29,7 @@ WP* new_wp(){
 	head=new_;
 	printf("New watchpoint %d\n",new_->NO);
 	return new_;
-}
+ }
 
 void free_wp(char *str){
 	WP *p=head;
@@ -77,7 +77,14 @@ bool check_wp(){
 	return pan;
 }
 
-
+void print_wp(){
+	WP *p=head;
+	while(p!=NULL){
+		printf("Num     Type       Disp Enb Address\n");
+		printf("%-3d watchpoint keep  n  %-7s\n",p->NO,p->expr);
+		p=p->next;
+	}
+}
 
 
 
