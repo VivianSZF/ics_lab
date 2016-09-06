@@ -251,11 +251,11 @@ uint32_t eval(int p, int q){
 			val1=eval(op+1,q);
 		}
 		else
-		{
+ 		{
 			val1=eval(p,op-1);
 			val2=eval(op+1,q);
  		}
-		switch(tokens[op].type){
+ 		switch(tokens[op].type){
 			case '+':
 				return val1+val2;
 			case '-':
@@ -283,9 +283,9 @@ uint32_t eval(int p, int q){
 				return 0;
 			default:assert(0);
 	 	}
- 	}
+  	}
 	return 0;
-} 
+}  
 
 
 uint32_t expr(char *e, bool *success) {
@@ -295,7 +295,8 @@ uint32_t expr(char *e, bool *success) {
 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
-	
+	uint32_t k=eval(0,nr_token-1);
+	printf("%u\n",k);	
 	return eval(0,nr_token-1);	
 }
 
