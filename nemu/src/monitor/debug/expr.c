@@ -24,14 +24,14 @@ static struct rule {
 	 * Pay attention to the precedence level of different rules.
 	 */ 
 
-	{" +",	NOTYPE,5,0},				// spaces
+	{" +",	NOTYPE,6,0},				// spaces
 	{"\\+", '+',3,0},					// plus
 	{"-", '-',3,0},                    //minus
 	{"\\*", '*',4,0},                    //mutiply
 	{"/", '/',4,0},                    //divide
-	{"\\(", '(',5,0},				    //zuokuohao
-	{"\\)", ')',5,0},                    //youkuohao
-	{"0x[0-9a-fA-F]+|[0-9]+|\\$[a-z]+", NUM,5,0},  //number
+	{"\\(", '(',6,0},				    //zuokuohao
+	{"\\)", ')',6,0},                    //youkuohao
+	{"0x[0-9a-fA-F]+|[0-9]+|\\$[a-z]+", NUM,6,0},  //number
 	{"==", EQ,2,0},                      //equal
 	{"!=", NEQ,2,0},                     //not equal
 	{"&&", AND_L,1,0},                    //logic and
@@ -77,10 +77,10 @@ static bool make_token(char *e) {
 	
 	nr_token = 0;
 
-	while(e[position] != '\0') {
+ 	while(e[position] != '\0') {
 		/* Try all rules one by one. */
-		for(i = 0; i < NR_REGEX; i ++) {
-			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
+ 		for(i = 0; i < NR_REGEX; i ++) {
+ 			if(regexec(&re[i], e + position, 1, &pmatch, 0) == 0 && pmatch.rm_so == 0) {
 				char *substr_start = e + position;
 				int substr_len = pmatch.rm_eo;
 
@@ -101,16 +101,16 @@ static bool make_token(char *e) {
 					case '+':case '/':case '(':case ')':case EQ:case NEQ:case AND_L:case OR_L:case NOT_L:
 						break;
 					case '-':
-						if(nr_token==0||(tokens[nr_token-1].type!=NUM && tokens[nr_token-1].type!=')')){
+ 						if(nr_token==0||(tokens[nr_token-1].type!=NUM && tokens[nr_token-1].type!=')')){
 								tokens[nr_token].type=NEG;
-								tokens[nr_token].level=4;
+								tokens[nr_token].level=5;
 								tokens[nr_token].sord=1;
 						}
 						break;
                     case '*':
-						if(nr_token==0||(tokens[nr_token-1].type!=NUM && tokens[nr_token-1].type!=')')){
+ 						if(nr_token==0||(tokens[nr_token-1].type!=NUM && tokens[nr_token-1].type!=')')){
 								tokens[nr_token].type=DEREF;
-								tokens[nr_token].level=4;
+								tokens[nr_token].level=5;
 								tokens[nr_token].sord=1;
 						}
 						break;
@@ -120,20 +120,20 @@ static bool make_token(char *e) {
 						tokens[nr_token].str[substr_len]='\0';
 						break;
 					default: panic("please implement me");
-				}
+ 				}
 				nr_token++;
 				break;
  			}
  		}
 
-		if(i == NR_REGEX) {
+ 		if(i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
  	}
 
 	return true; 
-} 
+ } 
 
 int check_parenthese(int p,int q){
 	int i;
@@ -146,22 +146,22 @@ int check_parenthese(int p,int q){
 				sum--;
 			if(sum<0)
 				return false;
-		}
-	}
+ 		}
+ 	}
 	else
 	{
 		return false;
-	}
+ 	}
 	if(sum==0) 
 		return true;
 	else
 		return false;
-}
+} 
 
 bool pand=true;
 
 uint32_t domiop(int p,int q){
-	int min=5;
+	int min=6;
 	int i,sum=0;
 	for(i=p;i<=q;i++)
 	{
@@ -177,8 +177,8 @@ uint32_t domiop(int p,int q){
 		if(tokens[i].type==')') sum--;
 		if(sum!=0) continue;
 		if(tokens[i].level==min){
-			if(tokens[i].level==4){
-				while(i>p&&tokens[i-1].level==4){
+			if(tokens[i].level==5){
+				while(i>p&&tokens[i-1].level==5){
 					i--;
 				}
 			}
