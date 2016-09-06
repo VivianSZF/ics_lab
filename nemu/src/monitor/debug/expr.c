@@ -158,7 +158,7 @@ int check_parenthese(int p,int q){
 		return false;
 }
 
-bool pand;
+bool pand=true;
 
 uint32_t domiop(int p,int q){
 	int min=5;
