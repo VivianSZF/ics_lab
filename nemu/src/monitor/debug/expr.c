@@ -195,7 +195,7 @@ uint32_t eval(int p, int q){
 	if(pand==false) return 0;
 	if(p>q){
 		pand=false;
-		return pand;
+		return 0;
 		}
 	else if(p==q)
 	{
@@ -216,7 +216,7 @@ uint32_t eval(int p, int q){
 					pand=false;
 					return pand;
 				}
-			}
+ 			}
 			else if(tokens[p].str[1]=='x'){
 				for(i=2;i<strlen(tokens[p].str);i++){
 					if(tokens[p].str[i]>='0'&&tokens[p].str[i]<='9')
@@ -230,19 +230,19 @@ uint32_t eval(int p, int q){
 			else
 				{
 					sscanf(tokens[p].str,"%u",&val);
-				}
+ 				}
 			
 			return val;
-		}
+ 		}
 		else
-		{
+ 		{
 			pand=false;
 			return 0;
 		}
-	}
+ 	}
 	else if(check_parenthese(p,q)==true){
 		return eval(p+1,q-1);
-	}
+ 	}
 	else{
 		int op=domiop(p,q);
 		if(pand==false) return 0;
@@ -283,7 +283,7 @@ uint32_t eval(int p, int q){
 				return 0;
 			default:assert(0);
 	 	}
-  	}
+   	}
 	return 0;
 }  
 
@@ -292,11 +292,11 @@ uint32_t expr(char *e, bool *success) {
 	if(!make_token(e)) {
 		*success = false;
 		return 0;
-	}
+ 	}
 
 	/* TODO: Insert codes to evaluate the expression. */
 	//uint32_t k=eval(0,nr_token-1);
 	//printf("%u\n",k);	
 	return eval(0,nr_token-1);	
-}
+ }
 
