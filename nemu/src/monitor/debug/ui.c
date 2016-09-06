@@ -8,6 +8,10 @@
 #include <readline/history.h>
 
 void cpu_exec(uint32_t);
+uint32_t expr(char *str,bool *success);
+extern WP* new_wp();
+extern void free_wp(char *str);
+extern void print_wp();
 
 /* We use the `readline' library to provide more flexibility to read from stdin. */
 char* rl_gets() {
@@ -46,6 +50,9 @@ static int cmd_x(char *args);
 
 static int cmd_p(char *args);
 
+static int cmd_w(char *args);
+
+static int cmd_d(char *args);
 
 static struct {
 	char *name;
@@ -59,9 +66,11 @@ static struct {
 	{ "info", "Print the information about registers and watchpoint", cmd_info },
 	{ "x", "scan the memory", cmd_x },
 	{ "p", "evaluate the expression", cmd_p},
+	{ "w", "set watchpoint", cmd_w},
+	{ "d", "delete watchpoint", cmd_d},
 	/* TODO: Add more commands */
 
- };
+   };
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
@@ -86,7 +95,7 @@ static struct {
 		printf("Unknown command '%s'\n", arg);
   	}
 	return 0;
- }
+   }
 
 static int cmd_si(char *args){
 	uint32_t n;
@@ -121,7 +130,7 @@ static int cmd_info(char *args){
 		}
 		else if (strcmp(buf,"w")==0)
 			{
-				printf("ok");
+				print_wp();
 			}
 		else
 	 		{
@@ -174,10 +183,37 @@ static int cmd_x(char *args){
 }
 
 static int cmd_p(char *args){
+	if(args==NULL){
+		printf("Unknown command p\n");
+		return 0;
+	}
 	bool pan=true;
 	printf("%u\n",expr(args, &pan));
 	return 0;
 }
+
+static int cmd_w(char *args){
+	if(args==NULL){
+		printf("Unknown command w\n");
+		return 0;
+	}
+	WP *new_=new_wp();
+	strcpy(new_->expr,args);
+	new_->expr[strlen(args)]='\0';
+	bool pan=true;
+	new_->value=expr(args,&pan);
+	//print_wp();
+	return 0;
+}
+
+static int cmd_d(char *args){
+	if(args==NULL){
+		printf("Unknown command d\n");
+		return 0;
+ 	}
+	free_wp(args);
+	return 0;
+ }
 
 void ui_mainloop() {
  	while(1) {
