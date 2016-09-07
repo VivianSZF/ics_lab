@@ -74,24 +74,24 @@ static struct {
 
 #define NR_CMD (sizeof(cmd_table) / sizeof(cmd_table[0]))
 
- static int cmd_help(char *args) {
+  static int cmd_help(char *args) {
 	/* extract the first argument */
 	char *arg = strtok(NULL, " ");
 	int i;
 
-	if(arg == NULL) {
+ 	if(arg == NULL) {
 		/* no argument given */
-		for(i = 0; i < NR_CMD; i ++) {
+ 		for(i = 0; i < NR_CMD; i ++) {
 			printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
   		}
   	}
-	else {
+ 	else {
 		for(i = 0; i < NR_CMD; i ++) {
 			if(strcmp(arg, cmd_table[i].name) == 0) {
 				printf("%s - %s\n", cmd_table[i].name, cmd_table[i].description);
 				return 0;
-  			}
-  		}
+   			}
+   		}
 		printf("Unknown command '%s'\n", arg);
   	}
 	return 0;
@@ -106,12 +106,12 @@ static int cmd_si(char *args){
 		if(pan==1)
 			cpu_exec(n);
 		else
-			printf("Unknown command 'si %s'\n",args);	
- 	}
+			printf("Wrong usage of command 'si %s'\n",args);	
+  	}
 	return 0;
-} 
+ } 
 
-static int cmd_info(char *args){
+ static int cmd_info(char *args){
 	char buf[5];
 	int pan=sscanf(args,"%s",buf);
 	if(pan==1)
@@ -127,34 +127,34 @@ static int cmd_info(char *args){
 			printf("esi     0x%x      %u\n",cpu.esi,cpu.esi);
 			printf("edi     0x%x      %u\n",cpu.edi,cpu.edi);
 			printf("eip     0x%x      %u\n",cpu.eip,cpu.eip);
-		}
+		} 
 		else if (strcmp(buf,"w")==0)
 			{
 				print_wp();
-			}
+			} 
 		else
 	 		{
-				printf("Unknown command 'info %s'\n",args);
-			}
- 	}
-	else
+				printf("Wrong usage of command 'info %s'\n",args);
+	 		}
+  	}
+ 	else
 	{
-		printf("Unknown command 'info %s'\n",args);
+		printf("Wrong usage of command 'info %s'\n",args);
 		return 0;
- 	}
+  	}
 	return 0;	
 }	 	
 
-static int cmd_x(char *args){
+ static int cmd_x(char *args){
 	int n;
 	uint32_t addr;
 	int i;
 	char buf[102];
 	int pan=sscanf(args,"%d%s",&n,buf);
 	if(buf[0]=='0'&&buf[1]=='x')
-	{
+ 	{
 		for(i=0;i<100;i++)
-		{
+ 		{
 			buf[i]=buf[i+2];
 		}
 	}
@@ -162,7 +162,7 @@ static int cmd_x(char *args){
 	i=0;
 	int t=0;
 	if(pan==2)
-	{
+ 	{
 		for(i=0;i<n;i++)
 		{
 			if(t==0||t%4==0)
@@ -172,31 +172,31 @@ static int cmd_x(char *args){
 			t++;
 			if(t%4==0)
 				printf("\n");
-		}
+	 	}
 		if(n%4!=0) printf("\n");
 	}
 	else
 	{
-		printf("Unknown command 'x %s'\n",args);
-	}
+		printf("Wrong usage of command 'x %s'\n",args);
+ 	}
 	return 0;
 }
 
 static int cmd_p(char *args){
 	if(args==NULL){
-		printf("Unknown command p\n");
+		printf("Wrong usage of command p\n");
 		return 0;
-	}
+ 	}
 	bool pan=true;
 	printf("%u\n",expr(args, &pan));
 	return 0;
-}
+} 
 
 static int cmd_w(char *args){
 	if(args==NULL){
-		printf("Unknown command w\n");
+		printf("Wrong usage of command w\n");
 		return 0;
-	}
+ 	}
 	WP *new_=new_wp();
 	strcpy(new_->expr,args);
 	new_->expr[strlen(args)]='\0';
@@ -204,11 +204,11 @@ static int cmd_w(char *args){
 	new_->value=expr(args,&pan);
 	//print_wp();
 	return 0;
-}
+} 
 
 static int cmd_d(char *args){
 	if(args==NULL){
-		printf("Unknown command d\n");
+		printf("Wrong usage of command d\n");
 		return 0;
  	}
 	free_wp(args);
