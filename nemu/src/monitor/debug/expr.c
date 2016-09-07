@@ -115,9 +115,17 @@ static bool make_token(char *e) {
 						}
 						break;
 					case NUM:
-						for(j=0;j<substr_len;j++)
-							tokens[nr_token].str[j]=substr_start[j];
-						tokens[nr_token].str[substr_len]='\0';
+						if(substr_len>=32){
+							for(j=0;j<31;j++)
+								tokens[nr_token].str[j]=substr_start[j];
+							tokens[nr_token].str[31]='\0';
+						}
+						else
+						{
+							for(j=0;j<substr_len;j++)
+								tokens[nr_token].str[j]=substr_start[j];
+							tokens[nr_token].str[substr_len]='\0';
+						}
 						break;
 					default: panic("please implement me");
  				}

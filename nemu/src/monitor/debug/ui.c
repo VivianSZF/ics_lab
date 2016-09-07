@@ -188,7 +188,7 @@ static int cmd_p(char *args){
 		return 0;
  	}
 	bool pan=true;
-	printf("%u\n",expr(args, &pan));
+	printf("%d\n",expr(args, &pan));
 	return 0;
 } 
 
