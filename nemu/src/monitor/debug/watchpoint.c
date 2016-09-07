@@ -80,7 +80,7 @@ bool check_wp(){
 void print_wp(){
 	WP *p=head;
 	while(p!=NULL){
-		printf("Num     Type    Disp  Enb  Address\n");
+		printf("Num     Type   Disp  Enb  Address\n");
 		printf("%-3d watchpoint keep   y    %-7s\n",p->NO,p->expr);
 		p=p->next;
 	}
