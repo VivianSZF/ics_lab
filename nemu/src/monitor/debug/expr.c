@@ -1,19 +1,19 @@
 #include "nemu.h"
 
- /* We use the POSIX regex functions to process regular expressions.
+  /* We use the POSIX regex functions to process regular expressions.
  * Type 'man regex' for more information about POSIX regex functions.
  */
 #include <sys/types.h>
 #include <regex.h>
 
- enum {
-	NOTYPE = 256, EQ, NEQ, NUM, DEREF, NEG, AND_L, OR_L ,NOT_L
+  enum {
+	NOTYPE = 256, EQ, NEQ, NUM, DEREF, NEG, AND, OR ,NOT
 	
 	/* TODO: Add more token types */
 
 } ;
 
-static struct rule {  
+static struct rule {   
 	char *regex;
 	int token_type;
 	int level;
@@ -22,7 +22,7 @@ static struct rule {
 
  	/* TODO: Add more rules.
 	 * Pay attention to the precedence level of different rules.
-	 */ 
+	 */  
 
 	{" +",	NOTYPE,6,0},				// spaces
 	{"\\+", '+',3,0},					// plus
@@ -34,9 +34,9 @@ static struct rule {
 	{"0x[0-9a-fA-F]+|[0-9]+|\\$[a-z]+", NUM,6,0},  //number
 	{"==", EQ,2,0},                      //equal
 	{"!=", NEQ,2,0},                     //not equal
-	{"&&", AND_L,1,0},                    //logic and
-	{"\\|\\|", OR_L,1,0},                 //logic or
-	{"\\!", NOT_L,2,1},                  //logic not
+	{"&&", AND,1,0},                    //logic and
+	{"\\|\\|", OR,1,0},                 //logic or
+	{"\\!", NOT,2,1},                  //logic not
 } ;
  
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -45,15 +45,15 @@ static regex_t re[NR_REGEX];
 
 /* Rules are used for many times.
  * Therefore we compile them only once before any usage.
-  */
-void init_regex() {
+   */
+ void init_regex() {
 	int i;
 	char error_msg[128];
 	int ret;
 
- 	for(i = 0; i < NR_REGEX; i ++) {
+  	for(i = 0; i < NR_REGEX; i ++) {
 		ret = regcomp(&re[i], rules[i].regex, REG_EXTENDED);
-		if(ret != 0) {
+ 		if(ret != 0) {
 			regerror(ret, &re[i], error_msg, 128);
 			Assert(ret == 0, "regex compilation failed: %s\n%s", error_msg, rules[i].regex);
  		}
@@ -65,7 +65,7 @@ typedef struct token {
 	char str[32];
 	int level;
 	int sord;
-}  Token;
+}   Token;
 
 Token tokens[32];
 int nr_token;
@@ -91,37 +91,37 @@ static bool make_token(char *e) {
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				 * to record the token in the array `tokens'. For certain types
 				 * of tokens, some extra actions should be performed.
-				 */
+ 				 */
 				tokens[nr_token].type=rules[i].token_type;
 				tokens[nr_token].level=rules[i].level;
 				tokens[nr_token].sord=rules[i].sord;
-				switch(rules[i].token_type) {
+ 				switch(rules[i].token_type) {
 					case NOTYPE:
 						nr_token--;break;
-					case '+':case '/':case '(':case ')':case EQ:case NEQ:case AND_L:case OR_L:case NOT_L:
+					case '+':case '/':case '(':case ')':case EQ:case NEQ:case AND:case OR:case NOT:
 						break;
 					case '-':
  						if(nr_token==0||(tokens[nr_token-1].type!=NUM && tokens[nr_token-1].type!=')')){
 								tokens[nr_token].type=NEG;
 								tokens[nr_token].level=5;
 								tokens[nr_token].sord=1;
-						}
+						} 
 						break;
                     case '*':
  						if(nr_token==0||(tokens[nr_token-1].type!=NUM && tokens[nr_token-1].type!=')')){
 								tokens[nr_token].type=DEREF;
 								tokens[nr_token].level=5;
 								tokens[nr_token].sord=1;
-						}
+ 						}
 						break;
 					case NUM:
 						if(substr_len>=32){
 							for(j=0;j<31;j++)
 								tokens[nr_token].str[j]=substr_start[j];
 							tokens[nr_token].str[31]='\0';
-						}
+ 						}
 						else
-						{
+ 						{
 							for(j=0;j<substr_len;j++)
 								tokens[nr_token].str[j]=substr_start[j];
 							tokens[nr_token].str[substr_len]='\0';
@@ -131,17 +131,17 @@ static bool make_token(char *e) {
  				}
 				nr_token++;
 				break;
- 			}
- 		}
+  			}
+  		}
 
- 		if(i == NR_REGEX) {
+ 	 	if(i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
 		}
- 	}
+  	}
 
 	return true; 
- } 
+ }  
 
 int check_parenthese(int p,int q){
 	int i;
@@ -154,17 +154,17 @@ int check_parenthese(int p,int q){
 				sum--;
 			if(sum<0)
 				return false;
- 		}
- 	}
+  		}
+  	}
 	else
 	{
 		return false;
- 	}
+  	}
 	if(sum==0) 
 		return true;
 	else
 		return false;
-} 
+}  
 
 bool pand=true;
 
@@ -178,7 +178,7 @@ uint32_t domiop(int p,int q){
 		if(sum!=0) continue;
 		if(tokens[i].level<min)
 			min=tokens[i].level;
-	}
+ 	}
 	for(i=q;i>=p;i--)
 	{
 		if(tokens[i].type=='(') sum++;
@@ -223,8 +223,8 @@ uint32_t eval(int p, int q){
 				else{
 					pand=false;
 					return pand;
-				}
- 			}
+ 				}
+  			}
 			else if(tokens[p].str[1]=='x'){
 				for(i=2;i<strlen(tokens[p].str);i++){
 					if(tokens[p].str[i]>='0'&&tokens[p].str[i]<='9')
@@ -233,22 +233,22 @@ uint32_t eval(int p, int q){
 						val=val*16+tokens[p].str[i]-'a'+10;
 					if(tokens[p].str[i]>='A'&&tokens[p].str[i]<='F')
 						val=val*16+tokens[p].str[i]-'A'+10;
-				}
-				}
+ 				}
+ 				}
 			else
 				{
 					sscanf(tokens[p].str,"%u",&val);
- 				}
+  				}
 			
 			return val;
  		}
 		else
- 		{
+  		{
 			pand=false;
 			return 0;
 		}
  	}
-	else if(check_parenthese(p,q)==true){
+ 	else if(check_parenthese(p,q)==true){
 		return eval(p+1,q-1);
  	}
 	else{
@@ -276,11 +276,11 @@ uint32_t eval(int p, int q){
 				return val1==val2;
 			case NEQ:
 				return val1!=val2;
-			case AND_L:
+			case AND:
 				return val1&&val2;
-			case OR_L:
+			case OR:
 				return val1||val2;
-			case NOT_L:
+			case NOT:
 				return !val1;
 			case NEG:
 				return -val1;
