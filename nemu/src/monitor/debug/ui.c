@@ -167,7 +167,7 @@ static int cmd_si(char *args){
 		{
 			if(t==0||t%4==0)
 				printf("0x%x:   ",addr);
-			printf("0x%08x   ",swaddr_read(addr-4,4));
+			printf("0x%08x   ",swaddr_read(addr,4));
 			addr=addr+4;
 			t++;
 			if(t%4==0)
