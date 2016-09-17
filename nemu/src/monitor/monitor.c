@@ -76,6 +76,19 @@ static void load_entry() {
 
 void restart() {
 	/* Perform some initialization to restart a program */
+	cpu.CF=0;
+	cpu.a1=1;
+	cpu.PF=0;
+	cpu.a2=0;
+	cpu.AF=0;
+	cpu.a3=0;
+	cpu.ZF=0;
+	cpu.SF=0;
+	cpu.TF=0;
+	cpu.IF=0;
+	cpu.DF=0;
+	cpu.OF=0;
+
 #ifdef USE_RAMDISK
 	/* Read the file with name `argv[1]' into ramdisk. */
 	init_ramdisk();
