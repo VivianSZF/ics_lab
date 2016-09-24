@@ -151,14 +151,16 @@ static int cmd_si(char *args){
 	int i;
 	char buf[102];
 	int pan=sscanf(args,"%d%s",&n,buf);
-	if(buf[0]=='0'&&buf[1]=='x')
+	if(buf[0]=='x')
  	{
-		for(i=0;i<100;i++)
+		for(i=100;i>=0;i--)
  		{
-			buf[i]=buf[i+2];
+			buf[i+1]=buf[i];
 		}
+		buf[0]='0';
 	}
-	sscanf(buf,"%x",&addr);
+	bool pand=true;
+	addr=expr(buf,&pand);
 	i=0;
 	int t=0;
 	if(pan==2)
