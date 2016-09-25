@@ -1,6 +1,6 @@
 ##### global settings #####
 
-.PHONY: nemu entry testcase kernel run gdb test submit clean
+.PHONY: nemu entry testcase kernel run gdb test submit clean count
 
 CC := gcc
 LD := ld
@@ -73,3 +73,10 @@ test: $(nemu_BIN) $(testcase_BIN) entry
 
 submit: clean
 	cd .. && tar cvj $(shell pwd | grep -o '[^/]*$$') > $(STU_ID).tar.bz2
+
+count: $(nemu_BIN) $(USERPROG) entry
+	@echo "now"
+	@echo ".h  file:"
+	@find nemu -type f -name "*.h" -exec cat {} \; |grep "\S"|wc -l
+	@echo ".c  file:"
+	@find nemu -type f -name "*.c" -exec cat {} \; |grep "\S"|wc -l
