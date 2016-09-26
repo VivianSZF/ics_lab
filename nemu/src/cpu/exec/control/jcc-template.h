@@ -9,6 +9,5 @@ make_helper(concat(je_si_,SUFFIX)){
 	return DATA_BYTE+1;
 }
 
-#undef instr
 
 #include "cpu/exec/template-end.h"
