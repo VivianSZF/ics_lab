@@ -4,14 +4,14 @@
 
 static void do_execute(){
 	if(DATA_BYTE==2){
-		cpu.eip=swaddr_read(cpu.esp,2);
+		cpu.eip=swaddr_read(cpu.esp,2)-1;
 		cpu.esp+=DATA_BYTE;
 		cpu.esp+=op_src->val;
 		cpu.eip=cpu.eip&0xffff;
 	}
 	else
 	{
-		cpu.eip=swaddr_read(cpu.esp,4);
+		cpu.eip=swaddr_read(cpu.esp,4)-1;
 		cpu.esp+=4;
 		cpu.esp+=op_src->val;
 	}
