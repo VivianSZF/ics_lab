@@ -44,6 +44,13 @@ make_helper(concat(decode_si_, SUFFIX)) {
 }
 #endif
 
+/* near */
+make_helper(concat(decode_n_, SUFFIX)) {
+	op_src->size=op_dest->size=DATA_BYTE;
+	op_src->val=0;
+	return 0;
+}
+
 /* eAX */
 static int concat(decode_a_, SUFFIX) (swaddr_t eip, Operand *op) {
 	op->type = OP_TYPE_REG;

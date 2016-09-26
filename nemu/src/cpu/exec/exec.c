@@ -142,7 +142,7 @@ helper_fun opcode_table [256] = {
 /* 0xb4 */	mov_i2r_b, mov_i2r_b, mov_i2r_b, mov_i2r_b,
 /* 0xb8 */	mov_i2r_v, mov_i2r_v, mov_i2r_v, mov_i2r_v, 
 /* 0xbc */	mov_i2r_v, mov_i2r_v, mov_i2r_v, mov_i2r_v, 
-/* 0xc0 */	group2_i_b, group2_i_v, inv, inv,
+/* 0xc0 */	group2_i_b, group2_i_v, ret_i_w, ret_n_l,
 /* 0xc4 */	inv, inv, mov_i2rm_b, mov_i2rm_v,
 /* 0xc8 */	inv, inv, inv, inv,
 /* 0xcc */	int3, inv, inv, inv,
@@ -158,7 +158,7 @@ helper_fun opcode_table [256] = {
 /* 0xf4 */	inv, inv, group3_b, group3_v,
 /* 0xf8 */	inv, inv, inv, inv,
 /* 0xfc */	inv, inv, group4, group5
-};
+ };
 
 helper_fun _2byte_opcode_table [256] = {
 /* 0x00 */	group6, group7, inv, inv, 
