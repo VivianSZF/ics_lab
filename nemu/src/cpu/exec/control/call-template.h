@@ -7,7 +7,8 @@ static void do_execute(){
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eip+len);
 	cpu.eip+=op_src->val;
-	print_asm("call %x",cpu.eip+len+1);
+	snprintf(op_src->str,OP_STR_SIZE,"$0x%x",cpu.eip+len+1);
+	print_asm_template1();
 }
 
 make_instr_helper(i);
