@@ -7,8 +7,8 @@ static void do_execute(){
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eip+len);
 	if(op_src->type==OP_TYPE_IMM){
-		cpu.eip+=op_src->val+1;
-		print_asm("call %x",cpu.eip+len);
+		cpu.eip+=op_src->val;
+		print_asm("call %x",cpu.eip+len+1);
 	}
 	else
 	{
