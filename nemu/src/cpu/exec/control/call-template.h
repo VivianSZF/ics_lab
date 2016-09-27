@@ -9,6 +9,7 @@ static void do_execute(){
 	cpu.eip+=op_src->val;
 	print_asm("call %x",cpu.eip+len+1);
 }
+
 /*
 make_helper(concat(call_i_,SUFFIX))
 {
@@ -22,6 +23,5 @@ make_helper(concat(call_i_,SUFFIX))
 */
 make_instr_helper(i);
 
-//make_instr_helper(rm);
 
 #include "cpu/exec/template-end.h"
