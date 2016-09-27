@@ -23,9 +23,9 @@
 */
 
 static void do_execute(){
-	uint32_t ans=swaddr_read(cpu.esp,4);
+	uint32_t returnpart=swaddr_read(cpu.esp,4);
 	cpu.esp=cpu.esp+4+op_src->val;
-	cpu.eip=ans;
+	cpu.eip=returnpart;
 	if(op_src->val==0) print_asm("ret");
 	else
 	{
