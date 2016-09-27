@@ -4,10 +4,9 @@
 
 static void do_execute(){
 	int len=instr_len();
-	cpu.esp-=DATA_BYTE;
+	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eip+len);
-	DATA_TYPE_S displacement=op_src->val;
-	cpu.eip+=displacement;
+	cpu.eip+=op_src->val;
 	print_asm("call %x",cpu.eip+len+1);
 }
 
