@@ -15,10 +15,10 @@
  	}
 	if(op_src->val==0)
 		print_asm("ret");
-/* 	else{
+ 	else{
 		cpu.eip-=2;
 		print_asm_template1();
-	}*/
+	}
 }
 
 
