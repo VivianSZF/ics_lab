@@ -12,4 +12,4 @@
 #include "jcc-template.h"
 #undef DATA_BYTE
 
-make_helper_v(je_si)
+make_helper_v(je_i)
