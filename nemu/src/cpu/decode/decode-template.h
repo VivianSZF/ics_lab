@@ -19,7 +19,7 @@ make_helper(concat(decode_i_, SUFFIX)) {
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->imm);
 #endif
 	return DATA_BYTE;
-}
+ }
 
 #if DATA_BYTE == 1 || DATA_BYTE == 4
 /* sign immediate */
@@ -184,6 +184,26 @@ make_helper(concat(decode_rm_cl_, SUFFIX)) {
 make_helper(concat(decode_rm_imm_, SUFFIX)) {
 	int len = decode_r2rm(eip);
 	len += decode_i_b(eip + len);
+	return len;
+} 
+
+make_helper(concat(decode_rmb2r_, SUFFIX)){
+	op_src->size=1;
+	int len=read_ModR_M(cpu.eip,op_src,op_dest);
+	op_dest->val=REG(op_dest->reg);
+#ifdef DEBUG
+	snprintf(op_dest->str,OP_STR_SIZE,"%%%s",REG_NAME(op_dest->reg));
+#endif
+	return len;
+}	
+
+make_helper(concat(decode_rmw2r_, SUFFIX)){
+	op_src->size=2;
+	int len=read_ModR_M(cpu.eip,op_src,op_dest);
+	op_dest->val=REG(op_dest->reg);
+#ifdef DEBUG
+	snprintf(op_dest->str,OP_STR_SIZE,"%%%s",REG_NAME(op_dest->reg));
+#endif
 	return len;
 }
 
