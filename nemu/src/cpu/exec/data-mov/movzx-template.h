@@ -3,7 +3,7 @@
 #define instr movzx
 
 static void do_execute(){
-	DATA_TYPE t=op_src->val&((1<<(op_src->size>>3))-1);
+	DATA_TYPE t=op_src->val;
 	OPERAND_W(op_dest,t);
 	print_asm_template2();
 }
