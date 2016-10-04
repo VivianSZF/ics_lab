@@ -16,10 +16,10 @@ make_instr_helper(i)
 
 #define instr jbe
 static void do_execute(){
-	printf("%d\n",len);
-	printf("%d\n",DATA_BYTE);
-	printf("%d\n",op_src->val);
-	printf("%x\n",cpu.eip);
+	//printf("%d\n",len);
+	//printf("%d\n",DATA_BYTE);
+	//printf("%d\n",op_src->val);
+	//printf("%x\n",cpu.eip);
 	DATA_TYPE_S dis=op_src->val;
 	if(cpu.CF==1||cpu.ZF==1){
 		cpu.eip+=dis;
