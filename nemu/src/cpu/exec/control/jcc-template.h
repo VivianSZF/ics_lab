@@ -16,14 +16,15 @@ make_instr_helper(i)
 
 #define instr jbe
 static void do_execute(){
+	printf("%d",len);
 	if(cpu.CF==1||cpu.ZF==1){
 		cpu.eip+=op_src->val;
 		print_asm("jbe %x",cpu.eip+len+1);
 	}
-	else
-	{
-		print_asm("jbe %x",cpu.eip+op_src->val+len+1);
-	}
+	//else
+	//{
+//		print_asm("jbe %x",cpu.eip+op_src->val+len+1);
+//	}
 }
 make_instr_helper(i)
 #undef instr
