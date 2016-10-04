@@ -23,11 +23,11 @@ static void do_execute(){
 	DATA_TYPE_S dis=op_src->val;
 	if(cpu.CF==1||cpu.ZF==1){
 		cpu.eip+=dis;
-		print_asm("jbe %x",cpu.eip+DATA_BYTE+1);
+		print_asm("jbe %x",cpu.eip+len+1);
 	}
 	else
-	{
-		print_asm("jbe %x",cpu.eip+dis+DATA_BYTE+1);
+	{ 
+		print_asm("jbe %x",cpu.eip+dis+len+1);
 	}
 }
 make_instr_helper(i)
