@@ -188,25 +188,21 @@ make_helper(concat(decode_rm_imm_, SUFFIX)) {
 } 
 
 make_helper(concat(decode_rmb2r_, SUFFIX)){
-	Operand *a=op_src;
-	Operand *b=op_src;
-	a->size=1;
-	int len=read_ModR_M(cpu.eip,a,b);
-	b->val=REG(b->reg);
+	op_src->size=1;
+	int len=read_ModR_M(eip,op_src,op_dest);
+	op_dest->val=REG(op_dest->reg);
 #ifdef DEBUG
-	snprintf(b->str,OP_STR_SIZE,"%%%s",REG_NAME(b->reg));
+	snprintf(op_dest->str,OP_STR_SIZE,"%%%s",REG_NAME(op_dest->reg));
 #endif
 	return len;
 }	
 
 make_helper(concat(decode_rmw2r_, SUFFIX)){
-	Operand *a=op_src;
-	Operand *b=op_dest;
 	op_src->size=2;
-	int len=read_ModR_M(cpu.eip,a,b);
-	b->val=REG(b->reg);
+	int len=read_ModR_M(eip,op_src,op_dest);
+	op_dest->val=REG(op_dest->reg);
 #ifdef DEBUG
-	snprintf(b->str,OP_STR_SIZE,"%%%s",REG_NAME(b->reg));
+	snprintf(op_dest->str,OP_STR_SIZE,"%%%s",REG_NAME(op_dest->reg));
 #endif
 	return len;
 }
