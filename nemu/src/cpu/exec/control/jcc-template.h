@@ -2,14 +2,15 @@
 
 #define instr je
  static void do_execute(){
+	DATA_TYPE_S dis=op_src->val;
 	if(cpu.ZF==1){ 
-		cpu.eip+=op_src->val;
+		cpu.eip+=dis;
 		print_asm("je %x",cpu.eip+1+len);
    	}
 	else
  	{
 		print_asm("je %x",cpu.eip+op_src->val+1+len);
-  	}
+   	}
 } 
 make_instr_helper(i)
 #undef instr
