@@ -3,8 +3,8 @@
 #define instr sub
 
 static void do_execute(){
-	DATA_TYPE src=op_src->val;
-	DATA_TYPE result=op_dest->val-src;
+	//DATA_TYPE src=op_src->val;
+	DATA_TYPE result=op_dest->val-op_src->val;
 	DATA_TYPE pf=result;
 	pf=pf^(pf>>4);
 	pf=pf^(pf>>2);
@@ -14,7 +14,7 @@ static void do_execute(){
 	cpu.ZF=(result==0);
 	cpu.SF=MSB(result);
 	cpu.CF=(op_dest->val<op_src->val);
-	if((MSB(op_dest->val)==MSB(op_src->val))&&(MSB(result)!=MSB(op_dest->val)))
+	if((MSB(op_dest->val)!=MSB(op_src->val))&&(MSB(result)!=MSB(op_dest->val)))
 		cpu.OF=1;
 	else
 		cpu.OF=0;
