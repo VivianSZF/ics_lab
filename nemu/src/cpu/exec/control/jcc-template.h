@@ -79,7 +79,20 @@ static void do_execute(){
 make_instr_helper(i)
 #undef instr
 
-
+#define instr jl
+static void do_execute(){
+	DATA_TYPE_S dis=op_src->val;
+	if(cpu.SF!=cpu.OF){
+		cpu.eip+=dis;
+		print_asm("jl %x",cpu.eip+len+1);
+	}
+	else
+	{
+		print_asm("jl %x",cpu.eip+dis+len+1);
+	}
+}
+make_instr_helper(i)
+#undef instr
 
 
 
