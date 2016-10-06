@@ -3,7 +3,7 @@
 #define instr cmp
 
 static void do_execute(){
-	printf("%x",cpu.eip);
+	printf("%x\n",cpu.eip);
 	DATA_TYPE result=op_dest->val-op_src->val;
 	DATA_TYPE pf=result;
 	pf=pf^(pf>>4);
