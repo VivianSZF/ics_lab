@@ -2,6 +2,10 @@
 
 #define instr je
  static void do_execute(){
+	printf("len %d\n",len);
+	printf("da %d\n",DATA_BYTE);
+	printf("eip %d\n",cpu.eip);
+	printf("op_src %d\n",op_src->val);
 	DATA_TYPE_S dis=op_src->val;
 	if(cpu.ZF==1){ 
 		cpu.eip+=dis;
