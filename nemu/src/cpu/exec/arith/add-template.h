@@ -4,7 +4,6 @@
 
 static void do_execute(){
 	DATA_TYPE result=op_src->val+op_dest->val;
-	OPERAND_W(op_dest,result);
     DATA_TYPE pf=result;
 	pf=pf^(pf>>4);
 	pf=pf^(pf>>2);
@@ -13,11 +12,12 @@ static void do_execute(){
 	cpu.PF=!pf;
 	cpu.ZF=(result==0);
 	cpu.SF=MSB(result);
-	cpu.CF=(op_dest->val<op_src->val);
+	cpu.CF=(result<op_src->val);
 	if((MSB(op_dest->val)==MSB(op_src->val))&&(MSB(result)!=MSB(op_dest->val)))
 		cpu.OF=1;
 	else
 		cpu.OF=0;
+	OPERAND_W(op_dest,result);
 	print_asm_template2();
 }
 
