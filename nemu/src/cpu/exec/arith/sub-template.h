@@ -13,7 +13,7 @@ static void do_execute(){
 	cpu.PF=!pf;
 	cpu.ZF=(result==0);
 	cpu.SF=MSB(result);
-	cpu.CF=(op_dest->val<op_src->val);
+	cpu.CF=(result<op_dest->val&&op_src->val>0);
 	if((MSB(op_dest->val)!=MSB(op_src->val))&&(MSB(result)==MSB(op_src->val)))
 		cpu.OF=1;
 	else
