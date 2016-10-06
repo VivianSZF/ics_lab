@@ -4,7 +4,6 @@
 
 static void do_execute () {
 	DATA_TYPE result = op_src->val - 1;
-	OPERAND_W(op_src,result);
 	DATA_TYPE pf=result;
 	pf=pf^(pf>>4);
 	pf=pf^(pf>>2);
@@ -13,11 +12,11 @@ static void do_execute () {
 	cpu.PF=!pf;
 	cpu.ZF=(result==0);
 	cpu.SF=MSB(result);
-	if((MSB(result)==MSB(op_src->val))&&(MSB(op_src->val)!=MSB(result)))
+	if((MSB(op_src->val)==1)&&(MSB(op_src->val)!=MSB(result)))
 		cpu.OF=1;
 	else
 		cpu.OF=0;
-
+	OPERAND_W(op_src,result);
 	/* TODO: Update EFLAGS. */
 	//panic("please implement me");
 	
