@@ -4,7 +4,7 @@
 
 static void do_execute(){
 	DATA_TYPE result=op_src->val+op_dest->val;
-	OPERAND_W(op_dest,result);
+	//OPERAND_W(op_dest,result);
     DATA_TYPE pf=result;
 	pf=pf^(pf>>4);
 	pf=pf^(pf>>2);
@@ -18,7 +18,7 @@ static void do_execute(){
 		cpu.OF=1;
 	else
 		cpu.OF=0;
-	//OPERAND_W(op_dest,result);
+	OPERAND_W(op_dest,result);
 	print_asm_template2();
 }
 
