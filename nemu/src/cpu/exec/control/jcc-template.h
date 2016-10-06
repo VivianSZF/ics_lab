@@ -49,4 +49,19 @@ static void do_execute(){
 make_instr_helper(i)
 #undef instr
 
+#define instr jle
+static void do_execute(){
+	DATA_TYPE_S dis=op_src->val;
+	if(cpu.ZF==1||cpu.SF!=cpu.OF){
+		cpu.eip+=dis;
+		print_asm("jle %x",cpu.eip+len+1);
+	}
+	else
+	{
+		print_asm("jle %x",cpu.eip+dis+len+1);
+	}
+}
+make_instr_helper(i)
+#undef instr
+
 #include "cpu/exec/template-end.h"
