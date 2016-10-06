@@ -85,15 +85,28 @@ static void do_execute(){
 	if(cpu.SF!=cpu.OF){
 		cpu.eip+=dis;
 		print_asm("jl %x",cpu.eip+len+1);
+ 	}
+	else
+ 	{
+		print_asm("jl %x",cpu.eip+dis+len+1);
+	}
+ }
+make_instr_helper(i)
+#undef instr
+
+#define instr js
+static void do_execute(){
+	DATA_TYPE_S dis=op_src->val;
+	if(cpu.SF==1){
+		cpu.eip+=dis;
+		print_asm("js %x",cpu.eip+len+1);
 	}
 	else
 	{
-		print_asm("jl %x",cpu.eip+dis+len+1);
+		print_asm("js %x",cpu.eip+dis+len+1);
 	}
 }
 make_instr_helper(i)
 #undef instr
-
-
 
 #include "cpu/exec/template-end.h"
