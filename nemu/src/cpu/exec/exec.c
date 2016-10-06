@@ -74,12 +74,12 @@ make_group(group3_v,
 
 /* 0xfe */
 make_group(group4,
-	inv, inv, inv, inv, 
+	dec_rm_b, inv, inv, inv, 
 	inv, inv, inv, inv)
 
 /* 0xff */
 make_group(group5,
-	inv, inv, inv, inv, 
+	dec_rm_v, inv, inv, inv, 
 	jmp_rm_v, inv, push_rm_v, inv)
 
 make_group(group6,
@@ -112,8 +112,8 @@ helper_fun opcode_table [256] = {
 /* 0x3c */	cmp_i2a_b, cmp_i2a_v, inv, inv,
 /* 0x40 */	inv, inv, inv, inv,
 /* 0x44 */	inv, inv, inv, inv,
-/* 0x48 */	inv, inv, inv, inv,
-/* 0x4c */	inv, inv, inv, inv,
+/* 0x48 */	dec_r_v, dec_r_v, dec_r_v, dec_r_v,
+/* 0x4c */	dec_r_v, dec_r_v, dec_r_v, dec_r_v,
 /* 0x50 */	push_r_v, push_r_v, push_r_v, push_r_v,
 /* 0x54 */	push_r_v, push_r_v, push_r_v, push_r_v,
 /* 0x58 */	pop_r_v, pop_r_v, pop_r_v, pop_r_v,
@@ -158,7 +158,7 @@ helper_fun opcode_table [256] = {
 /* 0xf4 */	inv, inv, group3_b, group3_v,
 /* 0xf8 */	inv, inv, inv, inv,
 /* 0xfc */	inv, inv, group4, group5
- }; 
+  }; 
 
 helper_fun _2byte_opcode_table [256] = {
 /* 0x00 */	group6, group7, inv, inv, 
