@@ -3,8 +3,8 @@
 #define instr sbb
 
 static void do_execute(){
-	DATA_TYPE_S src=op_src->val;
-	DATA_TYPE result=op_dest->val-(src+cpu.CF);
+	//DATA_TYPE_S src=op_src->val;
+	DATA_TYPE result=op_dest->val-(op_src->val+cpu.CF);
 	DATA_TYPE pf=result;
 	pf=pf^(pf>>4);
 	pf=pf^(pf>>2);
