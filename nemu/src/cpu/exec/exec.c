@@ -123,7 +123,7 @@ helper_fun opcode_table [256] = {
 /* 0x68 */	push_i_v, imul_i_rm2r_v, push_i_b, imul_si_rm2r_v,
 /* 0x6c */	inv, inv, inv, inv,
 /* 0x70 */	inv, inv, inv, inv,
-/* 0x74 */	je_i_b, jne_i_b, jbe_i_b, inv,
+/* 0x74 */	je_i_b, jne_i_b, jbe_i_b, ja_i_b,
 /* 0x78 */	js_i_b, inv, inv, inv,
 /* 0x7c */	jl_i_b, jge_i_b, jle_i_b, jg_i_b,
 /* 0x80 */	group1_b, group1_v, inv, group1_sx_v, 
@@ -194,7 +194,7 @@ helper_fun _2byte_opcode_table [256] = {
 /* 0x78 */	inv, inv, inv, inv, 
 /* 0x7c */	inv, inv, inv, inv, 
 /* 0x80 */	inv, inv, inv, inv,
-/* 0x84 */	je_i_v, jne_i_v, jbe_i_v, inv,
+/* 0x84 */	je_i_v, jne_i_v, jbe_i_v, ja_i_v,
 /* 0x88 */	js_i_v, inv, inv, inv, 
 /* 0x8c */	jl_i_v, jge_i_v, jle_i_v, jg_i_v, 
 /* 0x90 */	inv, inv, setb_rm_b, setae_rm_b,
@@ -225,7 +225,7 @@ helper_fun _2byte_opcode_table [256] = {
 /* 0xf4 */	inv, inv, inv, inv,
 /* 0xf8 */	inv, inv, inv, inv,
 /* 0xfc */	inv, inv, inv, inv
-      };
+       };
 
 make_helper(exec) {
 	ops_decoded.opcode = instr_fetch(eip, 1);
