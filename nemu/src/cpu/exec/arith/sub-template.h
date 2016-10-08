@@ -4,7 +4,7 @@
 
 static void do_execute(){
 	//DATA_TYPE_S src=op_src->val;
-	DATA_TYPE result=op_dest->val-op_src->val;
+	DATA_TYPE_S result=op_dest->val-op_src->val;
 	DATA_TYPE pf=result;
 	pf=pf^(pf>>4);
 	pf=pf^(pf>>2);
@@ -13,7 +13,7 @@ static void do_execute(){
 	cpu.PF=!pf;
 	cpu.ZF=(result==0);
 	cpu.SF=MSB(result);
-	cpu.CF=(result<op_dest->val&&op_src->val>0);
+	cpu.CF=(op_dest->val<op_src->val);
 	if((MSB(op_dest->val)!=MSB(op_src->val))&&(MSB(result)==MSB(op_src->val)))
 		cpu.OF=1;
 	else
