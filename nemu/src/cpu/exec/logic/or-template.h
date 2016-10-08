@@ -4,7 +4,6 @@
 
 static void do_execute () {
 	DATA_TYPE result = op_dest->val | op_src->val;
-	OPERAND_W(op_dest, result);
 
 	/* TODO: Update EFLAGS. */
 //	panic("please implement me");
@@ -18,6 +17,7 @@ static void do_execute () {
 	pf=pf^(pf>>1);
 	pf=pf&1;
 	cpu.PF=!pf;
+	OPERAND_W(op_dest,result);
 	print_asm_template2();
 }
 
