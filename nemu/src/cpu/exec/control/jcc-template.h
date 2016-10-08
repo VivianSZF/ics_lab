@@ -1,20 +1,35 @@
 #include "cpu/exec/template-start.h"
 
+#define instr ja
+static void do_execute(){
+	DATA_TYPE_S dis=op_src->val;
+	if(cpu.CF==0&&cpu.ZF==0){
+		cpu.eip+=dis;
+		print_asm("ja %x",cpu.eip+len+1);
+	}
+	else
+	{
+		print_asm("ja %x",cpu.eip+op_src->val+len+1);
+	}
+}
+make_instr_helper(i)
+#undef instr
+
 #define instr je
- static void do_execute(){
+static void do_execute(){
 	//printf("len %d\n",len);
 	//printf("da %d\n",DATA_BYTE);
 	//printf("eip %x\n",cpu.eip);
 	//printf("op_src %x\n",op_src->val);
 	DATA_TYPE_S dis=op_src->val;
-	if(cpu.ZF==1){ 
+ 	if(cpu.ZF==1){ 
 		cpu.eip+=dis;
 		print_asm("je %x",cpu.eip+1+len);
    	}
 	else
- 	{
+  	{
 		print_asm("je %x",cpu.eip+op_src->val+1+len);
-   	}
+     }
 } 
 make_instr_helper(i)
 #undef instr
