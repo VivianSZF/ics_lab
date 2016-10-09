@@ -64,6 +64,21 @@ static void do_execute(){
 	{
 		print_asm("jne %x",cpu.eip+dis+len+1);
 	}
+} 
+make_instr_helper(i)
+#undef instr
+
+#define instr jns
+static void do_execute(){
+	DATA_TYPE_S dis=op_src->val;
+	if(cpu.SF==0){
+		cpu.eip+=dis;
+		print_asm("jns %x",cpu.eip+len+1);
+	}
+	else
+	{
+		print_asm("jns %x",cpu.eip+dis+len+1);
+	}
 }
 make_instr_helper(i)
 #undef instr
