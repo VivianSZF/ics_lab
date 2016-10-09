@@ -3,7 +3,7 @@
 #define instr add
 
 static void do_execute(){
-	DATA_TYPE result=op_src->val+op_dest->val;
+	DATA_TYPE_S result=op_src->val+op_dest->val;
 	//OPERAND_W(op_dest,result);
     DATA_TYPE pf=result;
 	pf=pf^(pf>>4);
