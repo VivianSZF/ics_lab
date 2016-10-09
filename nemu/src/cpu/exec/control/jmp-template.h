@@ -5,7 +5,7 @@
 static void do_execute(){
 	int len=instr_len();
 	if(op_src->type==OP_TYPE_IMM){
-		cpu.eip+=op_src->val;
+		cpu.eip+=(DATA_TYPE_S)op_src->val;
 		print_asm("jmp"str(SUFFIX) " %x",cpu.eip+len+1);
 		}
 	else
