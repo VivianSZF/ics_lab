@@ -15,6 +15,21 @@ static void do_execute(){
 make_instr_helper(i)
 #undef instr
 
+#define instr jb
+static void do_execute(){
+	DATA_TYPE_S dis=op_src->val;
+	if(cpu.CF==1){
+		cpu.eip+=dis;
+		print_asm("jb %x",cpu.eip+len+1);
+	}
+	else
+	{
+		print_asm("jb %x",cpu.eip+op_src->val+len+1);
+	}
+}
+make_instr_helper(i)
+#undef instr
+
 #define instr je
 static void do_execute(){
 	//printf("len %d\n",len);
