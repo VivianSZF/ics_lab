@@ -8,8 +8,10 @@ static void do_execute(){
 		cpu.eip+=(DATA_TYPE_S)op_src->val;
 		print_asm("jmp"str(SUFFIX) " %x",cpu.eip+len+1);
 		}
-	else
+	else{
 		cpu.eip=op_src->val-len-1;
+		print_asm_template1();
+	}
 }
 
 make_instr_helper(i)
