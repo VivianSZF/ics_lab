@@ -55,7 +55,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	 * It is OK not to use the template above, but you should figure
 	 * out another way to perform the division.
 	 */
-/*
+
 	FLOAT la,lb;
 	FLOAT z,x,t=0;
 	int sign1=a>>31;
@@ -88,7 +88,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	else
 		result=(z<<16)|t;
 	return result;
-*/
+/*
 	unsigned int a00=a<<16;
 	unsigned int a01=a>>16;
 	unsigned int a10=a>>31;
@@ -108,6 +108,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 		}
 	}
 	return ans;
+*/
 }
 
 FLOAT f2F(float a) {
