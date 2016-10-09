@@ -5,7 +5,8 @@
 static void do_execute(){
 //	printf("%x\n",cpu.eip);
 	DATA_TYPE_S src=op_src->val;
-	DATA_TYPE_S result=op_dest->val-src;
+	DATA_TYPE_S dest=op_dest->val;
+	DATA_TYPE_S result=dest-src;
 	DATA_TYPE pf=result;
 	pf=pf^(pf>>4);
 	pf=pf^(pf>>2);
