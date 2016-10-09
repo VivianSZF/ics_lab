@@ -1,7 +1,7 @@
 #include "FLOAT.h"
 
 FLOAT F_mul_F(FLOAT a, FLOAT b) {
-	/*
+	
 	int sign1=a>>31;
 	int sign2=b>>31;
 	long long la,lb,lc;
@@ -20,7 +20,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 		return -result;
 	else
 		return result;
-		*/
+		/*
 	int s1=a>>31;
 	int s2=b>>31;
 	if(s1!=0) a=-a;
@@ -35,7 +35,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	int ans=c1+(c2<<16);
 	if(s1!=s2) ans=-ans;
 	return ans;
-
+*/
 }
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
