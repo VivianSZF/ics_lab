@@ -52,27 +52,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 		result=z;
 	return result;
 
-/*
-	unsigned int a00=a<<16;
-	unsigned int a01=a>>16;
-	unsigned int a10=a>>31;
-	unsigned int a11=a>>31;
-	int ans=0,i;
-	for(i=0;i<64;i++)
-	{
-		a11=(a11<<1)+(a10>>31);
-		a10=(a10<<1)+(a01>>31);
-		a01=(a01<<1)+(a00>>31);
-		a00=a00<<1;
-		ans=ans<<1;
-		if(a11>0||a10>=b){
-			if(a10<b) a11--;
-			a10-=b;
-			ans++;
-		}
-	}
-	return ans;
-*/
+
 }
 
 FLOAT f2F(float a) {
@@ -87,7 +67,8 @@ FLOAT f2F(float a) {
 	 */
 	FLOAT la=*(FLOAT *)&a;
 	FLOAT t=(la&0x007fffff)|0x00800000;
-	FLOAT order=(la&0x7f800000)>>23;	FLOAT s=order-127;
+	FLOAT order=(la&0x7f800000)>>23;	
+	FLOAT s=order-127;
 	if(s<7){
 		if(la>0)
 			return (t>>(7-s));
