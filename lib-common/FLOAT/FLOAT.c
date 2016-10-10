@@ -21,7 +21,7 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	else
 		return result;
 	*/	
-	int s1=a>>31;
+/*	int s1=a>>31;
 	int s2=b>>31;
 	if(s1!=0) a=-a;
 	if(s2!=0) b=-b;
@@ -35,7 +35,11 @@ FLOAT F_mul_F(FLOAT a, FLOAT b) {
 	int ans=c1+(c2<<16);
 	if(s1!=s2) ans=-ans;
 	return ans;
+*/
+	long long c=(long long)a*(long long)b;
+	return (FLOAT)(c>>16);
 }
+
 
 FLOAT F_div_F(FLOAT a, FLOAT b) {
 	/* Dividing two 64-bit integers needs the support of another library
