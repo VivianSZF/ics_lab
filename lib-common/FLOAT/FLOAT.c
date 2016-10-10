@@ -26,30 +26,27 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	 */
 
 	FLOAT la,lb;
-	int sign1=a>>31;
-	int sign2=b>>31;
-	if(sign1!=0)
+	if(a<0)
 		la=-a;
 	else
 		la=a;
-	if(sign2!=0)
+	if(b<0)
 		lb=-b;
 	else
 		lb=b;
 	int z=la/lb;
-	FLOAT x;
-	x=la%lb;
+	la=la%lb;
 	int i;
 	for(i=0;i<16;i++){
-		x=x<<1;
-		z=z<<1;
-		if(x>=lb){
-			x=x-lb;
+		la<<=1;
+		z<<=1;
+		if(la>=lb){
+			la=la-lb;
 			z++;
 		}
 	}
 	FLOAT result;
-	if((sign1==0&&sign2==1)||(sign1==1&&sign2==0))
+	if((a<0&&b>0)||(a>0&&b<0))
 		result=-z;
 	else
 		result=z;
