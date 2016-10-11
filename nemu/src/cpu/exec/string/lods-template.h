@@ -3,6 +3,8 @@
 #define instr lods
 
 static void do_execute(){
+	
+	//cpu.eax=
 	REG(R_EAX)=MEM_R(REG(R_ESI));
 	if(cpu.DF==0)
 		cpu.esi+=DATA_BYTE;
