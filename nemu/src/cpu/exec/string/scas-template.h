@@ -8,6 +8,8 @@ static void do_execute(){
 	op_dest->reg=R_EDI;
 	op_src->val=swaddr_read(cpu.eax,DATA_BYTE);
 	op_dest->val=swaddr_read(cpu.edi,DATA_BYTE);
+	snprintf(op_src->str,11,"%%es:(%%edi)");
+	snprintf(op_dest->str,5,"%%eax");
 	//DATA_TYPE src=REG(R_EAX);
 	//DATA_TYPE src=cpu.eax;
 	//DATA_TYPE dest=MEM_R(REG(R_EDI));
