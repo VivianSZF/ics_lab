@@ -3,9 +3,11 @@
 #define instr scas
 
 static void do_execute(){
-	DATA_TYPE_S result=REG(R_EAX)-MEM_R(REG(R_EDI));
-	cpu.CF=(REG(R_EAX)<MEM_R(REG(R_EDI)));
-	cpu.OF=((MSB(REG(R_EAX))!=MSB(MEM_R(REG(R_EDI))))&&(MSB(result)!=MSB(REG(R_EAX))));
+	DATA_TYPE src=REG(R_EAX);
+	DATA_TYPE dest=MEM_R(REG(R_EDI));
+	DATA_TYPE result=src-dest;
+	cpu.CF=(src<dest);
+	cpu.OF=((MSB(src)!=MSB(dest))&&(MSB(result)!=MSB(src)));
 	if(cpu.DF==0)
 		cpu.edi+=DATA_BYTE;
 	else
