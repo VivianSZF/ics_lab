@@ -3,13 +3,18 @@
 #define instr scas
 
 static void do_execute(){
-	DATA_TYPE src=REG(R_EAX);
+	op_src->type=op_dest->type=OP_TYPE_REG;
+	op_src->reg=R_EAX;
+	op_dest->reg=R_EDI;
+	op_src->val=swaddr_read(cpu.eax,DATA_BYTE);
+	op_dest->val=swaddr_read(cpu.edi,DATA_BYTE);
+	//DATA_TYPE src=REG(R_EAX);
 	//DATA_TYPE src=cpu.eax;
-	DATA_TYPE dest=MEM_R(REG(R_EDI));
+	//DATA_TYPE dest=MEM_R(REG(R_EDI));
 	//DATA_TYPE dest=swaddr_read(cpu.edi,DATA_BYTE);
-	DATA_TYPE_S result=src-dest;
-	cpu.CF=(src<dest);
-	cpu.OF=((MSB(src)!=MSB(dest))&&(MSB(result)!=MSB(src)));
+	DATA_TYPE result=op_src->val-op_dest->val;
+	cpu.CF=(op_src->val<op_dest->val);
+	cpu.OF=((MSB(op_src->val)!=MSB(op_dest->val))&&(MSB(result)!=MSB(op_src->val)));
 	if(cpu.DF==0)
 		cpu.edi+=DATA_BYTE;
 	else
