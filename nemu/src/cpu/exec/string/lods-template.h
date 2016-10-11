@@ -7,7 +7,7 @@ static void do_execute(){
 	if(cpu.DF==0)
 		cpu.esi+=DATA_BYTE;
 	else
-		cpu.esi+=DATA_BYTE;
+		cpu.esi-=DATA_BYTE;
 	print_asm_template2();
 }
 
