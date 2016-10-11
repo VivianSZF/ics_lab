@@ -4,8 +4,8 @@
 
 static void do_execute(){
 	
-	cpu.eax=swaddr_read(cpu.esi,DATA_BYTE);
-	//REG(R_EAX)=MEM_R(REG(R_ESI));
+	//cpu.eax=
+	REG(R_EAX)=MEM_R(REG(R_ESI));
 	if(cpu.DF==0)
 		cpu.esi+=DATA_BYTE;
 	else
