@@ -6,16 +6,16 @@ static void do_execute(){
 	op_src->type=op_dest->type=OP_TYPE_REG;
 	op_src->reg=R_EAX;
 	op_dest->reg=R_EDI;
-	if(DATA_BYTE==1){
-		op_src->val=cpu.gpr[0]._8[0];
+	/*if(DATA_BYTE==1){
+		op_src->val=reg_b(R_EAX);
 	}
 	else if(DATA_BYTE==2){
-		op_src->val=cpu.gpr[0]._16;
+		op_src->val=reg_w(R_EAX);
 	}
 	else{
-		op_src->val=cpu.eax;
-	}
-	//op_src->val=REG(R_EAX);
+		op_src->val=reg_l(R_EAX);
+	}*/
+	op_src->val=REG(R_EAX);
 	op_dest->val=swaddr_read(cpu.edi,DATA_BYTE);
 	snprintf(op_src->str,11,"%%es:(%%edi)");
 	snprintf(op_dest->str,5,"%%eax");
