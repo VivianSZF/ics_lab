@@ -23,7 +23,7 @@ static void do_execute(){
 	//DATA_TYPE src=cpu.eax;
 	//DATA_TYPE dest=MEM_R(REG(R_EDI));
 	//DATA_TYPE dest=swaddr_read(cpu.edi,DATA_BYTE);
-	DATA_TYPE_S result=op_src->val-op_dest->val;
+	DATA_TYPE result=op_src->val-op_dest->val;
 	cpu.CF=(op_src->val<op_dest->val);
 	cpu.OF=((MSB(op_src->val)!=MSB(op_dest->val))&&(MSB(result)!=MSB(op_src->val)));
 	if(cpu.DF==0)
