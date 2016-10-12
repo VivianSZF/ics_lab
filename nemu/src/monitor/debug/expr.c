@@ -300,7 +300,7 @@ uint32_t eval(int p, int q){
 			case NEG:
 				return -val1;
 			case DEREF:
-				return swaddr_read(val2,1);
+				return swaddr_read(val2,4);
 			case NUM:case OBJECT:
 				pand=false;
 				return 0;
