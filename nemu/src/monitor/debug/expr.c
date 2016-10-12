@@ -207,7 +207,6 @@ extern int get_object(char *str);
 
 uint32_t eval(int p, int q){
 	uint32_t val=0;
-	printf("0x");
 	if(pand==false) return 0;
 	if(p>q){
 		pand=false;
