@@ -26,7 +26,20 @@ make_helper(rep) {
 				);
 
 			/* TODO: Jump out of the while loop if necessary. */
-
+				if(ops_decoded.opcode==0xae
+						||ops_decoded.opcode==0xaf
+						||ops_decoded.opcode==0xa6
+						||ops_decoded.opcode==0xa7
+						){
+							if(cpu.ZF){
+								if(instr_fetch(eip,1)==0xf3)
+									break;
+							}
+							else{
+								if(instr_fetch(eip,1)==0xf2)
+									break;
+							}
+				}
 		}
 		len = 1;
 	}
