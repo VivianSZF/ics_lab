@@ -190,7 +190,7 @@ static int cmd_p(char *args){
 		return 0;
  	}
 	bool pan=true;
-	printf("%d\n",expr(args, &pan));
+	printf("0x%x\n",expr(args, &pan));
 	return 0;
 } 
 
