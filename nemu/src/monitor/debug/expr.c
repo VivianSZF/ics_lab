@@ -301,7 +301,7 @@ uint32_t eval(int p, int q){
 				return -val1;
 			case DEREF:
 				printf("val2: %x\n",val1);
-				return swaddr_read(val2,1);
+				return swaddr_read(val1,1);
 			case NUM:case OBJECT:
 				pand=false;
 				return 0;
