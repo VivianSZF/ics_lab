@@ -6,8 +6,8 @@
 #include <sys/types.h>
 #include <regex.h>
 
-  enum {
-	NOTYPE = 256, EQ, NEQ, NUM, DEREF, NEG, AND, OR ,NOT
+  enum { 
+	NOTYPE = 256, EQ, NEQ, NUM, DEREF, NEG, AND, OR ,NOT,OBJECT
 	
 	/* TODO: Add more token types */
 
@@ -37,6 +37,7 @@ static struct rule {
 	{"&&", AND,1,0},                    //logic and
 	{"\\|\\|", OR,1,0},                 //logic or
 	{"\\!", NOT,2,1},                  //logic not
+	{"[a-zA-Z]|[a-zA-Z][a-zA-Z0-9_]+", OBJECT,6,0},  //object
 } ;
  
 #define NR_REGEX (sizeof(rules) / sizeof(rules[0]) )
@@ -127,6 +128,11 @@ static bool make_token(char *e) {
 							tokens[nr_token].str[substr_len]='\0';
 						}
 						break;
+					case OBJECT:
+						strncpy(tokens[nr_token].str,substr_start,substr_len);
+
+						tokens[nr_token].str[substr_len]='\0';
+						break;
 					default: panic("please implement me");
  				}
 				nr_token++;
@@ -197,6 +203,7 @@ uint32_t domiop(int p,int q){
 	return 0;
 }
 
+extern int get_object(char *str);
 
 uint32_t eval(int p, int q){
 	uint32_t val=0;
@@ -207,7 +214,14 @@ uint32_t eval(int p, int q){
 		}
 	else if(p==q)
 	{
-		if(tokens[p].type==NUM)
+		if(tokens[p].type==OBJECT){
+			val=get_object(tokens[p].str);
+			if(val==-1){
+				pand=false;
+				return 0;
+			}
+		}
+		else if(tokens[p].type==NUM)
 		{
 			int i;
 			if(tokens[p].str[0]=='$'){
@@ -286,7 +300,7 @@ uint32_t eval(int p, int q){
 				return -val1;
 			case DEREF:
 				return swaddr_read(val1,4);
-			case NUM:
+			case NUM:case OBJECT:
 				pand=false;
 				return 0;
 			default:assert(0);
