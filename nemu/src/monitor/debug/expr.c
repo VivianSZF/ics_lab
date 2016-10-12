@@ -216,7 +216,7 @@ uint32_t eval(int p, int q){
 	{
 		if(tokens[p].type==OBJECT){
 			val=get_object(tokens[p].str);
-			//printf("0x%x\n",val);
+			printf("0x%x\n",val);
 			if(val==-1){
 				pand=false;
 				return 0;
