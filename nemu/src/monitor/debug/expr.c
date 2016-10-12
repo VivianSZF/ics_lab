@@ -221,6 +221,7 @@ uint32_t eval(int p, int q){
 				pand=false;
 				return 0;
 			}
+			return val;
 		}
 		else if(tokens[p].type==NUM)
 		{
