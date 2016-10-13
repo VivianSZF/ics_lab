@@ -6,16 +6,15 @@ static void do_execute(){
 	//op_src->type=op_dest->type=OP_TYPE_REG;
 	//op_src->reg=R_EAX;
 	//op_dest->reg=R_EDI;
-	DATA_TYPE src;
-	printf("%d\n",DATA_BYTE);
+	int rega;
 	if(DATA_BYTE==1){
-		src=REG(R_AL);
+		rega=R_AL;
 	}
 	else if(DATA_BYTE==2){
-		src=REG(R_AX);
+		rega=R_AX;
 	}
 	else{
-		src=REG(R_EAX);
+		rega=R_EAX;
 	}
 	//op_src->val=REG(R_EAX);
 	//op_dest->val=swaddr_read(cpu.edi,DATA_BYTE);
@@ -23,7 +22,8 @@ static void do_execute(){
 	//snprintf(op_dest->str,5,"%%eax");
 	//DATA_TYPE src=REG(R_EAX);
 	//DATA_TYPE src=cpu.eax;
-	DATA_TYPE dest=MEM_R(reg_l(R_EDI));
+	DATA_TYPE src=REG(rega);
+	DATA_TYPE dest=swaddr_read(reg_l(R_EDI),DATA_BYTE);
 	//DATA_TYPE dest=swaddr_read(cpu.edi,DATA_BYTE);
 	DATA_TYPE result=src-dest;
 	cpu.CF=(src<dest);

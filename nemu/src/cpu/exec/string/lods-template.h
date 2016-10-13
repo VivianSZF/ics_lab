@@ -3,15 +3,20 @@
 #define instr lods
 
 static void do_execute(){
+	int rega;
 	if(DATA_BYTE==1){
-		REG(R_AL)=swaddr_read(cpu.esi,1);
+		//REG(R_AL)=swaddr_read(cpu.esi,1);
+		rega=R_AL;
 	}
 	else if(DATA_BYTE==2){
-		REG(R_AX)=swaddr_read(cpu.esi,2);
+		rega=R_AX;
+		//REG(R_AX)=swaddr_read(cpu.esi,2);
 	}
 	else{
-		REG(R_EAX)=swaddr_read(cpu.esi,4);
+		rega=R_EAX;
+		//REG(R_EAX)=swaddr_read(cpu.esi,4);
 	}
+	REG(rega)=MEM_R(reg_l(R_ESI));
 	if(cpu.DF==0)
 		cpu.esi+=DATA_BYTE;
 	else
