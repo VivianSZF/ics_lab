@@ -69,7 +69,7 @@ make_helper(repnz) {
 				||ops_decoded.opcode==0xaf
 		  ){
 			if(cpu.ZF==0){
-				if(instr_fetch(eip,1)==0xf2)
+				//if(instr_fetch(eip,1)==0xf2)
 					break;
 			}
 		}
