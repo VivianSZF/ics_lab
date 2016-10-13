@@ -25,7 +25,7 @@ static void do_execute(){
 	DATA_TYPE src=REG(rega);
 	DATA_TYPE dest=swaddr_read(reg_l(R_EDI),DATA_BYTE);
 	//DATA_TYPE dest=swaddr_read(cpu.edi,DATA_BYTE);
-	DATA_TYPE result=src-dest;
+	DATA_TYPE_S result=src-dest;
 	cpu.CF=(src<dest);
 	cpu.OF=((MSB(src)!=MSB(dest))&&(MSB(result)!=MSB(src)));
 	if(cpu.DF==0)
