@@ -12,8 +12,6 @@ static void do_execute(){
 	else{
 		cpu.eax=swaddr_read(cpu.esi,4);
 	}
-	
-//	REG(R_EAX)=MEM_R(REG(R_ESI));
 	if(cpu.DF==0)
 		cpu.esi+=DATA_BYTE;
 	else
