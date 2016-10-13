@@ -7,13 +7,13 @@ static void do_execute(){
 	op_src->reg=R_EAX;
 	op_dest->reg=R_EDI;
 	if(DATA_BYTE==1){
-		op_src->val=cpu.gpr[0]._8[0];
+		op_src->val=REG(R_AL);
 	}
 	else if(DATA_BYTE==2){
-		op_src->val=cpu.gpr[0]._16;
+		op_src->val=REG(R_AX);
 	}
 	else{
-		op_src->val=cpu.eax;
+		op_src->val=REG(R_EAX);
 	}
 	//op_src->val=REG(R_EAX);
 	op_dest->val=swaddr_read(cpu.edi,DATA_BYTE);

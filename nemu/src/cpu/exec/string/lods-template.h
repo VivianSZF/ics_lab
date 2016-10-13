@@ -4,13 +4,13 @@
 
 static void do_execute(){
 	if(DATA_BYTE==1){
-		cpu.gpr[0]._8[0]=swaddr_read(cpu.esi,1);
+		REG(R_AL)=swaddr_read(cpu.esi,1);
 	}
 	else if(DATA_BYTE==2){
-		cpu.gpr[0]._16=swaddr_read(cpu.esi,2);
+		REG(R_AX)=swaddr_read(cpu.esi,2);
 	}
 	else{
-		cpu.eax=swaddr_read(cpu.esi,4);
+		REG(R_EAX)=swaddr_read(cpu.esi,4);
 	}
 	if(cpu.DF==0)
 		cpu.esi+=DATA_BYTE;
