@@ -26,7 +26,7 @@ static void do_execute(){
 	DATA_TYPE dest=swaddr_read(reg_l(R_EDI),DATA_BYTE);
 	//DATA_TYPE dest=swaddr_read(cpu.edi,DATA_BYTE);
 	DATA_TYPE_S result=src-dest;
-	printf("src: %x  dest:%x  result:%d\n",src,dest,result);
+	//printf("src: %x  dest:%x  result:%d\n",src,dest,result);
 	cpu.CF=(src<dest);
 	cpu.OF=((MSB(src)!=MSB(dest))&&(MSB(result)!=MSB(src)));
 	if(cpu.DF==0)
