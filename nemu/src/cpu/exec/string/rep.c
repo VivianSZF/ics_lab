@@ -31,7 +31,7 @@ make_helper(rep) {
 						||ops_decoded.opcode==0xa6
 						||ops_decoded.opcode==0xa7
 						){
-							if(cpu.ZF){
+							if(cpu.ZF==0){
 								if(instr_fetch(eip,1)==0xf3)
 									break;
 							}
@@ -68,7 +68,7 @@ make_helper(repnz) {
 				||ops_decoded.opcode==0xae
 				||ops_decoded.opcode==0xaf
 		  ){
-			if(cpu.ZF==0){
+			if(cpu.ZF==1){
 				//if(instr_fetch(eip,1)==0xf2)
 					break;
 			}
