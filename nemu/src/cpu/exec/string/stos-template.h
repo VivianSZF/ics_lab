@@ -3,16 +3,15 @@
 #define instr stos
 
 static void do_execute(){
-	/*if(DATA_BYTE==1){
-		swaddr_write(cpu.edi,DATA_BYTE,cpu.gpr[0]._8[0]);
+	if(DATA_BYTE==1){
+		swaddr_write(cpu.edi,DATA_BYTE,REG(R_AL));
 	}
 	else if(DATA_BYTE==2){
-		swaddr_write(cpu.edi,DATA_BYTE,cpu.gpr[0]._16);
+		swaddr_write(cpu.edi,DATA_BYTE,REG(R_AX));
 	}
 	else{
-		swaddr_write(cpu.edi,DATA_BYTE,cpu.eax);
-	}*/
-	swaddr_write(reg_l(R_EDI),DATA_BYTE,(DATA_TYPE)reg_l(R_EAX));
+		swaddr_write(cpu.edi,DATA_BYTE,REG(R_EAX));
+	}
 	if(cpu.DF==0)
 		cpu.edi+=DATA_BYTE;
 	else
