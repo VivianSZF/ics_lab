@@ -3,7 +3,7 @@
 #define instr lods
 
 static void do_execute(){
-	int rega;
+	uint32_t rega;
 	if(DATA_BYTE==1){
 		//REG(R_AL)=swaddr_read(cpu.esi,1);
 		rega=R_AL;

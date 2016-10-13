@@ -6,7 +6,7 @@ static void do_execute(){
 	//op_src->type=op_dest->type=OP_TYPE_REG;
 	//op_src->reg=R_EAX;
 	//op_dest->reg=R_EDI;
-	int rega;
+	uint32_t rega;
 	if(DATA_BYTE==1){
 		rega=R_AL;
 	}
