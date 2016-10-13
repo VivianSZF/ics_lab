@@ -7,6 +7,7 @@ static void do_execute(){
 	//op_src->reg=R_EAX;
 	//op_dest->reg=R_EDI;
 	DATA_TYPE src;
+	printf("%d\n",DATA_BYTE);
 	if(DATA_BYTE==1){
 		src=REG(R_AL);
 	}
