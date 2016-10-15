@@ -89,3 +89,16 @@ int get_object(char *str){
 	}
 	return -1;
 }
+
+char *get_func(int addr,int *pan){
+	int i;
+	for(i=0;i<nr_symtab_entry;i++){
+		if(addr>=symtab[i].st_value&&addr<symtab[i].st_value+symtab[i].st_size){
+		*pan=1;
+		return strtab+symtab[i].st_name;
+	}		
+	}
+	return 0;
+}
+
+

@@ -54,6 +54,8 @@ static int cmd_w(char *args);
 
 static int cmd_d(char *args);
 
+static int cmd_bt(char *args);
+
 static struct {
 	char *name;
 	char *description;
@@ -68,6 +70,7 @@ static struct {
 	{ "p", "evaluate the expression", cmd_p},
 	{ "w", "set watchpoint", cmd_w},
 	{ "d", "delete watchpoint", cmd_d},
+	{ "bt", "print the stack frame", cmd_bt}
 	/* TODO: Add more commands */
 
    };
@@ -216,6 +219,29 @@ static int cmd_d(char *args){
 	free_wp(args);
 	return 0;
  }
+
+extern char *get_func(int addr, int *pan);
+
+static int cmd_bt(char *args){
+	if(args==NULL){
+		printf("Wrong usage of command bt\n");
+		return 0;
+	}
+	int pan=0,time=0;
+	int ebp=cpu.ebp;
+	int addr=cpu.eip;
+	get_func(addr,&pan);
+	if(!pan){
+		printf("No stack frame!\n");
+		return 0;
+	}
+	while(ebp!=0){
+		printf("#%d 0x%x in %s(%d %d %d %d)\n",time++,addr,get_func(addr,&pan),swaddr_read(ebp+8,4),swaddr_read(ebp+12,4),swaddr_read(ebp+16,4),swaddr_read(ebp+20,4));
+		addr=swaddr_read(ebp+4,4);
+		ebp=swaddr_read(ebp,4);
+	}
+	return 0;
+}
 
 void ui_mainloop() {
  	while(1) {
