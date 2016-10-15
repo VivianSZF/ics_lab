@@ -223,10 +223,6 @@ static int cmd_d(char *args){
 extern char *get_func(int addr, int *pan);
 
 static int cmd_bt(char *args){
-	if(args==NULL){
-		printf("Wrong usage of command bt\n");
-		return 0;
-	}
 	int pan=0,time=0;
 	int ebp=cpu.ebp;
 	int addr=cpu.eip;
