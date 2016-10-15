@@ -232,6 +232,7 @@ static int cmd_bt(char *args){
 		return 0;
 	}
 	while(ebp!=0){
+		printf("ebp: %x\n",ebp);
 		printf("#%d 0x%x in %s(%d %d %d %d)\n",time++,addr,get_func(addr,&pan),swaddr_read(ebp+8,4),swaddr_read(ebp+12,4),swaddr_read(ebp+16,4),swaddr_read(ebp+20,4));
 		addr=swaddr_read(ebp+4,4);
 		ebp=swaddr_read(ebp,4);
