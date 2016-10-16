@@ -24,7 +24,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	 * It is OK not to use the template above, but you should figure
 	 * out another way to perform the division.
 	 */
-
+/*
 	FLOAT la,lb;
 	if(a<0)
 		la=-a;
@@ -52,7 +52,12 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 		result=z;
 	return result;
 
-
+*/
+	FLOAT x1=a>>16;
+	FLOAT x2=a<<16;
+	FLOAT result;
+	asm volatile ("idivl %%ecx" : "=a"(result) : "c"(b), "a"(x2), "d"(x1));
+	return result;
 }
 
 FLOAT f2F(float a) {
