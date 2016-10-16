@@ -56,7 +56,7 @@ FLOAT F_div_F(FLOAT a, FLOAT b) {
 	FLOAT x1=a>>16;
 	FLOAT x2=a<<16;
 	FLOAT result;
-	asm volatile ("idivl %%ecx" : "=a"(result) ,"=b"(x1): "c"(b), "a"(x2), "d"(x1));
+	asm volatile ("idivl %%ecx" : "=a"(result) ,"=d"(x1): "c"(b), "a"(x2), "d"(x1));
 	return result;
 }
 
