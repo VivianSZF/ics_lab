@@ -3,6 +3,7 @@
 #include "FLOAT.h"
 #include <sys/mman.h>
 
+extern char _ppfs_setargs;
 extern char _vfprintf_internal;
 extern char _fpmaxtostr;
 extern int __stdio_fwrite(char *buf, int len, FILE *stream);
@@ -18,6 +19,11 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 
 	char buf[80];
 	int len = sprintf(buf, "0x%08x", f);
+	len+=sprintf(buf+len,"%u",f>>16);
+	uint64_t xiaoshu;
+	xiaoshu=(uint64_t)(f&0xffff);
+	xiaoshu=(xiaoshu*1000000)>>16;
+	len+=sprintf(buf+len,"%.6llu",xiaoshu);
 	return __stdio_fwrite(buf, len, stream);
 }
 
@@ -26,12 +32,22 @@ static void modify_vfprintf() {
 	 * argument during the execution of `_vfprintf_internal'. Below
 	 * is the code section in _vfprintf_internal() relative to the
 	 * hijack.
-	 */
+ 	 */
 	uint32_t addr=(uint32_t)&_vfprintf_internal;
 	uint32_t p=addr+0x306;
-	
-	*(uint32_t*)(p+1)+=(uint32_t)(void*)&format_FLOAT-(uint32_t)&_fpmaxtostr;
-#if 0
+	mprotect((void*)((uint32_t)(p-100)&0xfffff000),4096*2,PROT_READ|PROT_WRITE|PROT_EXEC);
+	*(int*)(p+1)+=(int)&format_FLOAT-(int)&_fpmaxtostr;
+	*(unsigned char*)(p-10)=0x57;
+	*(unsigned char*)(p-9)=0x90;
+	*(unsigned char*)(p-8)=0x90;
+	*(unsigned char*)(p-11)=0x08;
+	*(unsigned char*)(p-34)=0x8b;
+	*(unsigned char*)(p-33)=0x3a;
+	*(unsigned char*)(p-31)=0x8b;
+	*(unsigned char*)(p-30)=0x3a;
+
+
+# if 0
 	else if (ppfs->conv_num <= CONV_A) {  /* floating point */
 		ssize_t nf;
 		nf = _fpmaxtostr(stream,
@@ -75,9 +91,11 @@ static void modify_ppfs_setargs() {
 	 * "%f" arguments for _vfprintf_internal() in _ppfs_setargs().
 	 * Below is the code section in _vfprintf_internal() relative to
 	 * the modification.
- 	 */
-
-# if 0
+  	 */
+	uint32_t p=(uint32_t) &_ppfs_setargs+0x74;
+	*(unsigned char*)p=0xeb;
+	*(unsigned char*)(p+1)=0x2d;
+#  if 0
 	enum {                          /* C type: */
 		PA_INT,                       /* int */
 		PA_CHAR,                      /* int, cast to char */
@@ -148,9 +166,9 @@ static void modify_ppfs_setargs() {
 	 * target branch will also prepare a 64-bit argument, without
 	 * introducing floating point instructions. When this function
 	 * returns, the action of the code above should do the following:
- 	 */
+  	 */
 
-# if 0
+ # if 0
 	while (i < ppfs->num_data_args) {
 		switch(ppfs->argtype[i++]) {
 			case (PA_INT|PA_FLAG_LONG_LONG):
