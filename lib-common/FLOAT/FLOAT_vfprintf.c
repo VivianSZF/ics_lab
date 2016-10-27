@@ -19,9 +19,12 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 
 	char buf[80];
 	int len=0;
-	/*if((f&0x80000000)==0x80000000)
-		len=sprintf(buf,"-");*/
-	len+=sprintf(buf+len,"%d",f>>16);
+	if((f&0x80000000)==0x80000000)
+	{
+		f=~(f-0x1);
+		len=sprintf(buf,"-");
+	}
+	len+=sprintf(buf+len,"%u",f>>16);
 	len+=sprintf(buf+len,".");
 	uint64_t xiaoshu;
 	xiaoshu=(uint64_t)(f&0x0000ffff);
@@ -38,7 +41,7 @@ static void modify_vfprintf() {
  	 */
 	uint32_t addr=(uint32_t)&_vfprintf_internal;
 	uint32_t p=addr+0x306;
-//	mprotect((void*)((uint32_t)(p-100)&0xfffff000),4096*2,PROT_READ|PROT_WRITE|PROT_EXEC);
+	//mprotect((void*)((uint32_t)(p-100)&0xfffff000),4096*2,PROT_READ|PROT_WRITE|PROT_EXEC);
 	*(int*)(p+1)+=(int)(void*)&format_FLOAT-(int)(void*)&_fpmaxtostr;
 	*(unsigned char*)(p-0xa)=0x57;
 	*(unsigned char*)(p-0x9)=0x90;
