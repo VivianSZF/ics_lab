@@ -22,7 +22,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	len+=sprintf(buf+len,"%u",f>>16);
 	len+=sprintf(buf+len,".");
 	uint64_t xiaoshu;
-	xiaoshu=(uint64_t)(f&0xffff);
+	xiaoshu=(uint64_t)(f&0x0000ffff);
 	xiaoshu=(xiaoshu*1000000)>>16;
 	len+=sprintf(buf+len,"%.6llu",xiaoshu);
 	return __stdio_fwrite(buf, len, stream);
