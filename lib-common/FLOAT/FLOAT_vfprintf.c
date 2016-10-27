@@ -37,17 +37,17 @@ static void modify_vfprintf() {
 	uint32_t addr=(uint32_t)&_vfprintf_internal;
 	uint32_t p=addr+0x306;
 //	mprotect((void*)((uint32_t)(p-100)&0xfffff000),4096*2,PROT_READ|PROT_WRITE|PROT_EXEC);
-	*(int*)(p+1)+=(int)&format_FLOAT-(int)&_fpmaxtostr;
+	*(int*)(p+1)+=(int)((void*)&format_FLOAT-(void*)&_fpmaxtostr);
 	*(unsigned char*)(p-10)=0x57;
 	*(unsigned char*)(p-9)=0x90;
 	*(unsigned char*)(p-8)=0x90;
 	*(unsigned char*)(p-11)=0x08;
-	/*(unsigned char*)(p-34)=0x8b;
+	*(unsigned char*)(p-34)=0x8b;
 	*(unsigned char*)(p-33)=0x3a;
 	*(unsigned char*)(p-31)=0x8b;
-	*(unsigned char*)(p-30)=0x3a;*/
-	*(uint16_t*)(p-0x22)=0x3a8b;
-	*(uint16_t*)(p-0x1e)=0x3a8b;
+	*(unsigned char*)(p-30)=0x3a;
+	//*(uint16_t*)(p-0x22)=0x3a8b;
+	//*(uint16_t*)(p-0x1e)=0x3a8b;
 
 
 # if 0
