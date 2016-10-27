@@ -19,9 +19,9 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 
 	char buf[80];
 	int len=0;
-	if((f&0x80000000)==0x80000000)
-		len=sprintf(buf,"-");
-	len+=sprintf(buf+len,"%u",f>>16);
+	/*if((f&0x80000000)==0x80000000)
+		len=sprintf(buf,"-");*/
+	len+=sprintf(buf+len,"%d",f>>16);
 	len+=sprintf(buf+len,".");
 	uint64_t xiaoshu;
 	xiaoshu=(uint64_t)(f&0x0000ffff);
