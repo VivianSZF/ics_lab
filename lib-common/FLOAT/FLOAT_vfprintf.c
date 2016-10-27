@@ -94,8 +94,8 @@ static void modify_ppfs_setargs() {
 	 * the modification.
   	 */
 	uint32_t p=(uint32_t) &_ppfs_setargs+0x74;
-	*(unsigned char*)p=0xeb;
-	*(unsigned char*)(p+1)=0x2d;
+	*(unsigned char*)p=0x2d;
+	*(unsigned char*)(p+1)=0xeb;
 #  if 0
 	enum {                          /* C type: */
 		PA_INT,                       /* int */
