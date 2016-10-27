@@ -168,7 +168,7 @@ static void modify_ppfs_setargs() {
 	 * returns, the action of the code above should do the following:
   	 */
 
- # if 0
+#if 0
 	while (i < ppfs->num_data_args) {
 		switch(ppfs->argtype[i++]) {
 			case (PA_INT|PA_FLAG_LONG_LONG):
