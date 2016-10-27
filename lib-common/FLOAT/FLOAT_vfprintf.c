@@ -20,11 +20,11 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	char buf[80];
 	int len = sprintf(buf, "0x%08x", f);
 	len+=sprintf(buf+len,"%u",f>>16);
+	len+=sprintf(buf+len,".");
 	uint64_t xiaoshu;
 	xiaoshu=(uint64_t)(f&0xffff);
 	xiaoshu=(xiaoshu*1000000)>>16;
 	len+=sprintf(buf+len,"%.6llu",xiaoshu);
-	len+=sprintf(buf+len,".");
 	return __stdio_fwrite(buf, len, stream);
 } 
 
