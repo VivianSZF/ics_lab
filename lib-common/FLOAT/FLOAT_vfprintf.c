@@ -25,10 +25,10 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	xiaoshu=(xiaoshu*1000000)>>16;
 	len+=sprintf(buf+len,"%.6llu",xiaoshu);
 	return __stdio_fwrite(buf, len, stream);
-}
+} 
 
 static void modify_vfprintf() {
-	/* TODO: Implement this function to hijack the formating of "%f"
+	/* TODO: Implement this fun ction to hijack the formating of "%f"
 	 * argument during the execution of `_vfprintf_internal'. Below
 	 * is the code section in _vfprintf_internal() relative to the
 	 * hijack.
@@ -41,10 +41,12 @@ static void modify_vfprintf() {
 	*(unsigned char*)(p-9)=0x90;
 	*(unsigned char*)(p-8)=0x90;
 	*(unsigned char*)(p-11)=0x08;
-	*(unsigned char*)(p-34)=0x8b;
-	*(unsigned char*)(p-33)=0x3a;
+	/*(unsigned char*)(p-34)=0x8b;
+i	*(unsigned char*)(p-33)=0x3a;
 	*(unsigned char*)(p-31)=0x8b;
-	*(unsigned char*)(p-30)=0x3a;
+	*(unsigned char*)(p-30)=0x3a;*/
+	*(uint16_t*)(p-0x22)=0x3a8b;
+	*(uint16_t*)(p-0x1e)=0x3a8b;
 
 
 # if 0
