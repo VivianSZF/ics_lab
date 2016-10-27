@@ -24,6 +24,7 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	xiaoshu=(uint64_t)(f&0xffff);
 	xiaoshu=(xiaoshu*1000000)>>16;
 	len+=sprintf(buf+len,"%.6llu",xiaoshu);
+	len+=sprintf(buf+len,".");
 	return __stdio_fwrite(buf, len, stream);
 } 
 
@@ -41,10 +42,10 @@ static void modify_vfprintf() {
 	*(unsigned char*)(p-9)=0x90;
 	*(unsigned char*)(p-8)=0x90;
 	*(unsigned char*)(p-11)=0x08;
-	/*(unsigned char*)(p-34)=0x8b;
-i	*(unsigned char*)(p-33)=0x3a;
+	*(unsigned char*)(p-34)=0x8b;
+	*(unsigned char*)(p-33)=0x3a;
 	*(unsigned char*)(p-31)=0x8b;
-	*(unsigned char*)(p-30)=0x3a;*/
+	*(unsigned char*)(p-30)=0x3a;
 	*(uint16_t*)(p-0x22)=0x3a8b;
 	*(uint16_t*)(p-0x1e)=0x3a8b;
 
