@@ -41,10 +41,10 @@ static void modify_vfprintf() {
 	*(unsigned char*)(p-9)=0x90;
 	*(unsigned char*)(p-8)=0x90;
 	*(unsigned char*)(p-11)=0x08;
-	*(unsigned char*)(p-34)=0x3a;
-	*(unsigned char*)(p-33)=0x8b;
-	*(unsigned char*)(p-31)=0x3a;
-	*(unsigned char*)(p-30)=0x8b;
+	*(unsigned char*)(p-34)=0x8b;
+	*(unsigned char*)(p-33)=0x3a;
+	*(unsigned char*)(p-31)=0x8b;
+	*(unsigned char*)(p-30)=0x3a;
 
 
 # if 0
