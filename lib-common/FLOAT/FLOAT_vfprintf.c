@@ -18,8 +18,8 @@ __attribute__((used)) static int format_FLOAT(FILE *stream, FLOAT f) {
 	 */
 
 	char buf[80];
-	int len = sprintf(buf, "0x%08x", f);
-	len+=sprintf(buf+len,"%u",f>>16);
+	int len;// = sprintf(buf, "0x%08x", f);
+	len+=sprintf(buf,"%u",f>>16);
 	len+=sprintf(buf+len,".");
 	uint64_t xiaoshu;
 	xiaoshu=(uint64_t)(f&0x0000ffff);
