@@ -9,6 +9,7 @@
 #include "data-mov/movzx.h"
 #include "data-mov/cwtl.h"
 #include "data-mov/cltd.h"
+#include "data-mov/movcr.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
@@ -48,3 +49,4 @@
 #include "control/jcc.h"
 #include "control/ret.h"
 #include "control/jmp.h"
+#include "control/lgdt.h"

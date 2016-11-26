@@ -90,7 +90,7 @@ void restart() {
 	cpu.IF=0;
 	cpu.DF=0;
 	cpu.OF=0;
-
+	cpu.cr0.val=0;
 #ifdef USE_RAMDISK
 	/* Read the file with name `argv[1]' into ramdisk. */
 	init_ramdisk();
