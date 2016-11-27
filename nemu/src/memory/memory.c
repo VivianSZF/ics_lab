@@ -6,7 +6,7 @@ uint32_t l1read(hwaddr_t,size_t);
 void l1write(hwaddr_t,size_t,uint32_t);
 uint32_t l2read(hwaddr_t,size_t);
 void l2write(hwaddr_t,size_t,uint32_t);
-lnaddr_t seg_translate(swaddr_t addr,size_t len, uint8_t sreg);
+lnaddr_t seg_translate(swaddr_t ,size_t, uint8_t);
 
 /* Memory accessing interfaces */
 

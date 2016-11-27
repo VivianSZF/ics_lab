@@ -68,15 +68,15 @@ typedef struct {
 				unsigned TI :1;
 				unsigned INDEX:13;
 			};
-			uint16_t _16;
-		}SR[4];
+			uint16_t val;
+		}sreg[4];
 		struct{
 			uint16_t CS,DS,ES,SS;
 		};
 	};*/
 	RSEG rseg[4];
 	SegDesc creg[4];
-	struct{
+ 	struct{
 		bool valid;
 		uint32_t base;
 		uint32_t limit;
