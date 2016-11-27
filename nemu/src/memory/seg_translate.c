@@ -20,9 +20,9 @@ lnaddr_t seg_translate(swaddr_t addr,size_t len, uint8_t sreg){
 		base=sd->base_15_0+(sd->base_23_16<<16)+(sd->base_31_24<<24);
 		cpu.segcache[sreg].base=base;
 		cpu.segcache[sreg].valid=true;
-		//printf("%x %x %x %x\n",cpu.sreg[sreg].INDEX,base,sreg,cpu.GDTR.base);
+		printf("%x %x %x %x\n",cpu.sreg[sreg].INDEX,base,sreg,cpu.GDTR.base);
 	}
-	printf("%x  %x\n",cpu.sreg[sreg].INDEX,base);
+//	printf("%x  %x\n",cpu.sreg[sreg].INDEX,base);
 	lnaddr=addr+base;
 	return lnaddr;
 }
