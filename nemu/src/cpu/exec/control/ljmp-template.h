@@ -3,7 +3,7 @@
 #define instr ljmp
 
 make_helper(concat(ljmp_,SUFFIX)){
-	uint8_t sreg=instr_fetch(cpu.eip+1+DATA_BYTE,2);
+	uint16_t sreg=instr_fetch(cpu.eip+1+DATA_BYTE,2);
 	swaddr_t addr=instr_fetch(cpu.eip+1,DATA_BYTE);
 	cpu.eip=addr-7;
 	cpu.CS=sreg;
