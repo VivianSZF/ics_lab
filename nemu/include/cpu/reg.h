@@ -16,14 +16,14 @@ enum { S_ES, S_CS, S_SS, S_DS};
  * For more details about the register encoding scheme, see i386 manual.
  */
 
-typedef union{
+/*typedef union{
 	struct{
 		unsigned RPL  :2;
 		unsigned TI   :1;
 		unsigned INDEX:13;
 	};
 	uint16_t val;
-}RSEG;
+}RSEG;*/
 
 typedef struct {
 	union
@@ -61,7 +61,7 @@ typedef struct {
 		uint16_t limit;
 	}GDTR;
 	CR0 cr0;
-	/*union{
+	union{
 		union{
 			struct{
 				unsigned RPL:2;
@@ -71,11 +71,11 @@ typedef struct {
 			uint16_t val;
 		}sreg[4];
 		struct{
-			uint16_t CS,DS,ES,SS;
+			uint16_t ES,CS,SS,DS;
 		};
-	};*/
-	RSEG rseg[4];
-	SegDesc creg[4];
+	};
+	/*RSEG rseg[4];
+	SegDesc creg[4];*/
  	struct{
 		bool valid;
 		uint32_t base;
