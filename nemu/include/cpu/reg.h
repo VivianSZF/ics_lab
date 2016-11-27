@@ -76,6 +76,11 @@ typedef struct {
 	};*/
 	RSEG rseg[4];
 	SegDesc creg[4];
+	struct{
+		bool valid;
+		uint32_t base;
+		uint32_t limit;
+	}segcache[4];
 }CPU_state;
 
 
