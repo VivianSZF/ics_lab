@@ -8,6 +8,7 @@ make_helper(concat(ljmp_,SUFFIX)){
 	cpu.eip=addr-7;
 	cpu.CS=sreg;
 	cpu.segcache[1].valid=false;
+	printf("!%x\n",DATA_BYTE);
 	print_asm("ljmp $0x%x $0x%x",sreg,addr);
 	return DATA_BYTE+3;
 }
