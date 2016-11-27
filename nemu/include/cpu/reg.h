@@ -16,6 +16,15 @@ enum { S_ES, S_CS, S_SS, S_DS};
  * For more details about the register encoding scheme, see i386 manual.
  */
 
+typedef union{
+	struct{
+		unsigned RPL  :2;
+		unsigned TI   :1;
+		unsigned INDEX:13;
+	};
+	uint16_t val;
+}RSEG;
+
 typedef struct {
 	union
 	{
@@ -65,6 +74,7 @@ typedef struct {
 			uint16_t CS,DS,ES,SS;
 		};
 	};*/
+	RSEG rseg[4];
 	SegDesc creg[4];
 }CPU_state;
 

@@ -73,7 +73,8 @@ typedef union PageTableEntry {
 typedef PTE (*PT) [NR_PTE];
 
 /* the 64bit segment descriptor */
-typedef struct SegmentDescriptor {
+typedef union SegmentDescriptor {
+	struct{
 	uint32_t limit_15_0          : 16;
 	uint32_t base_15_0           : 16;
 	uint32_t base_23_16          : 8;
@@ -87,6 +88,8 @@ typedef struct SegmentDescriptor {
 	uint32_t pad0                : 1;
 	uint32_t granularity         : 1;
 	uint32_t base_31_24          : 8;
+	};
+	uint64_t val;
 } SegDesc;
 
 typedef struct GateDescriptor {
