@@ -15,6 +15,16 @@ void init_l2cache();
 
 FILE *log_fp = NULL;
 
+void init_CR0(){
+	cpu.cr0.val=0;
+	int i;
+	for(i=0;i<4;i++)
+		cpu.segcache[i].valid=false;
+	cpu.segcache[1].valid=true;
+	cpu.segcache[1].base=0;
+	cpu.segcache[1].limit=0xffffffff;
+}
+
 static void init_log() {
 	log_fp = fopen("log.txt", "w");
 	Assert(log_fp, "Can not open 'log.txt'");
@@ -39,6 +49,9 @@ void init_monitor(int argc, char *argv[]) {
 
 	/* Initialize the watchpoint pool. */
 	init_wp_pool();
+
+	/*Initialize CR0*/
+	init_CR0();
 
 	/* Display welcome message. */
 	welcome();
@@ -76,7 +89,7 @@ static void load_entry() {
 	fclose(fp);
 }
 
-void restart() {
+ void restart() {
 	/* Perform some initialization to restart a program */
 	cpu.CF=0;
 	cpu.a1=1;
@@ -90,7 +103,6 @@ void restart() {
 	cpu.IF=0;
 	cpu.DF=0;
 	cpu.OF=0;
-	cpu.cr0.val=0;
 #ifdef USE_RAMDISK
 	/* Read the file with name `argv[1]' into ramdisk. */
 	init_ramdisk();
