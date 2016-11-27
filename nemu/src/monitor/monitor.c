@@ -50,9 +50,6 @@ void init_monitor(int argc, char *argv[]) {
 	/* Initialize the watchpoint pool. */
 	init_wp_pool();
 
-	/*Initialize CR0*/
-	init_CR0();
-
 	/* Display welcome message. */
 	welcome();
 }
@@ -120,4 +117,7 @@ static void load_entry() {
 	/*Initialize cache. */
 	init_l1cache();
 	init_l2cache();
+
+	/*Initialize CR0*/
+	init_CR0();
 }
