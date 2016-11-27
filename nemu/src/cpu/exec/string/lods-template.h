@@ -16,7 +16,7 @@ static void do_execute(){
 		rega=R_EAX;
 		//REG(R_EAX)=swaddr_read(cpu.esi,4);
 	}
-	REG(rega)=MEM_R(reg_l(R_ESI));
+	REG(rega)=MEM_R(reg_l(R_ESI),S_DS);
 	if(cpu.DF==0)
 		cpu.esi+=DATA_BYTE;
 	else

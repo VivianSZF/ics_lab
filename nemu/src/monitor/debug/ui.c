@@ -172,7 +172,7 @@ static int cmd_si(char *args){
 		{
 			if(t==0||t%4==0)
 				printf("0x%x:   ",addr);
-			printf("0x%08x   ",swaddr_read(addr,4));
+			printf("0x%08x   ",swaddr_read(addr,4,S_DS));
 			addr=addr+4;
 			t++;
 			if(t%4==0)
@@ -191,11 +191,11 @@ static int cmd_p(char *args){
 	if(args==NULL){
 		printf("Wrong usage of command p\n");
 		return 0;
- 	}
+  	}
 	bool pan=true;
 	printf("0x%x\n",expr(args, &pan));
 	return 0;
-} 
+ } 
 
 static int cmd_w(char *args){
 	if(args==NULL){
@@ -233,9 +233,9 @@ static int cmd_bt(char *args){
 	}
 	while(ebp!=0){
 		//printf("ebp: %x\n",ebp);
-		printf("#%d 0x%x in %s(%d %d %d %d)\n",time++,addr,get_func(addr,&pan),swaddr_read(ebp+8,4),swaddr_read(ebp+12,4),swaddr_read(ebp+16,4),swaddr_read(ebp+20,4));
-		addr=swaddr_read(ebp+4,4);
-		ebp=swaddr_read(ebp,4);
+		printf("#%d 0x%x in %s(%d %d %d %d)\n",time++,addr,get_func(addr,&pan),swaddr_read(ebp+8,4,S_SS),swaddr_read(ebp+12,4,S_SS),swaddr_read(ebp+16,4,S_SS),swaddr_read(ebp+20,4,S_SS));
+		addr=swaddr_read(ebp+4,4,S_SS);
+		ebp=swaddr_read(ebp,4,S_SS);
 	}
 	return 0;
 }

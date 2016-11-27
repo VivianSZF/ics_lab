@@ -12,7 +12,7 @@ static void do_execute(){
 	else{
 		swaddr_write(cpu.edi,DATA_BYTE,REG(R_EAX));
 	}*/
-	swaddr_write(cpu.edi,DATA_BYTE,(DATA_TYPE)cpu.eax);
+	swaddr_write(cpu.edi,DATA_BYTE,(DATA_TYPE)cpu.eax,S_ES);
 	if(cpu.DF==0)
 		cpu.edi+=DATA_BYTE;
 	else

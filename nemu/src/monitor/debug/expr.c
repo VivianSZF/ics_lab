@@ -92,11 +92,11 @@ static bool make_token(char *e) {
 				/* TODO: Now a new token is recognized with rules[i]. Add codes
 				 * to record the token in the array `tokens'. For certain types
 				 * of tokens, some extra actions should be performed.
- 				 */
+  				 */
 				tokens[nr_token].type=rules[i].token_type;
 				tokens[nr_token].level=rules[i].level;
 				tokens[nr_token].sord=rules[i].sord;
- 				switch(rules[i].token_type) {
+  				switch(rules[i].token_type) {
 					case NOTYPE:
 						nr_token--;break;
 					case '+':case '/':case '(':case ')':case EQ:case NEQ:case AND:case OR:case NOT:
@@ -137,14 +137,14 @@ static bool make_token(char *e) {
  				}
 				nr_token++;
 				break;
-  			}
-  		}
+   			}
+   		}
 
  	 	if(i == NR_REGEX) {
 			printf("no match at position %d\n%s\n%*.s^\n", position, e, position, "");
 			return false;
-		}
-  	}
+ 		}
+   	}
 
 	return true; 
  }  
@@ -178,7 +178,7 @@ uint32_t domiop(int p,int q){
 	int min=6;
 	int i,sum=0;
 	for(i=p;i<=q;i++)
-	{
+ 	{
 		if(tokens[i].type=='(') sum++;
 		if(tokens[i].type==')') sum--;
 		if(sum!=0) continue;
@@ -194,11 +194,11 @@ uint32_t domiop(int p,int q){
 			if(tokens[i].level==5){
 				while(i>p&&tokens[i-1].level==5){
 					i--;
-				}
-			}
+ 				}
+ 			}
 			return i;
-		}
-	}
+ 		}
+ 	}
 	pand=false;
 	return 0;
 }
@@ -301,7 +301,7 @@ uint32_t eval(int p, int q){
 			case NEG:
 				return -val1;
 			case DEREF:
-				return swaddr_read(val1,4);
+				return swaddr_read(val1,4,S_DS);
 			case NUM:case OBJECT:
 				pand=false;
 				return 0;
