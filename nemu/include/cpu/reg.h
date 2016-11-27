@@ -81,6 +81,7 @@ typedef struct {
 		uint32_t base;
 		uint32_t limit;
 	}segcache[4];
+	
 }CPU_state;
 
 

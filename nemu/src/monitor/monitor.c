@@ -16,7 +16,7 @@ void init_l2cache();
 FILE *log_fp = NULL;
 
 void init_CR0(){
-	cpu.cr0.val=0;
+	cpu.cr0.protect_enable=0;
 	int i;
 	for(i=0;i<4;i++)
 		cpu.segcache[i].valid=false;
