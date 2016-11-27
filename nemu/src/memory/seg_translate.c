@@ -22,7 +22,7 @@ lnaddr_t seg_translate(swaddr_t addr,size_t len, uint8_t sreg){
 		cpu.segcache[sreg].valid=true;
 		//printf("%x %x %x %x\n",cpu.sreg[sreg].INDEX,base,sreg,cpu.GDTR.base);
 	}
-	//printf("%x  %x\n",cpu.sreg[sreg].INDEX,base);
+	printf("%x  %x\n",cpu.sreg[sreg].INDEX,base);
 	lnaddr=addr+base;
 	return lnaddr;
 }
