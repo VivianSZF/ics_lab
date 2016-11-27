@@ -64,9 +64,9 @@ typedef struct {
 	union{
 		union{
 			struct{
-				unsigned RPL:2;
-				unsigned TI :1;
-				unsigned INDEX:13;
+				uint16_t RPL:2;
+				uint16_t TI :1;
+				uint16_t INDEX:13;
 			};
 			uint16_t val;
 		}sreg[4];
