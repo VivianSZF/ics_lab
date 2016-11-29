@@ -61,6 +61,7 @@ typedef struct {
 		uint16_t limit;
 	}GDTR;
 	CR0 cr0;
+	CR3 cr3;
 	union{
 		union{
 			struct{
