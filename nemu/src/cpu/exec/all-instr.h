@@ -10,6 +10,7 @@
 #include "data-mov/cwtl.h"
 #include "data-mov/cltd.h"
 #include "data-mov/movcr.h"
+#include "data-mov/std.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
