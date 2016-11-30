@@ -19,6 +19,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	lnaddr.val=addr;
 	PDE dir;
 	dir.val=hwaddr_read((cpu.cr3.page_directory_base<<12)+lnaddr.dir*4,4);
+	printf("0x%x",dir.val);
 	if(dir.present==0)
 		panic("The page is empty in %x/n",addr);
 	PTE pagetable;
