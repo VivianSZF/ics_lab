@@ -48,7 +48,7 @@ static int fullornot(uint32_t index){
 }
 
 static void l1set_read(hwaddr_t addr, void*data){
-	//Assert(addr<HW_MEM_SIZE,"physical address %x is outside of the physical memory!",addr);
+	Assert(addr<HW_MEM_SIZE,"physical address %x is outside of the physical memory!",addr);
 	cache_addr ad;
 	ad.addr=addr&~BURST_MASK;
 	uint32_t of=ad.offset1;
