@@ -29,7 +29,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	//}
 	//else{
 		hwaddr_t hwaddr=page_translate(addr);
-		printf("0x%x 0x%x\n",addr,hwaddr);
+//		printf("0x%x 0x%x\n",addr,hwaddr);
 		return hwaddr_read(hwaddr, len);
 	//}
 }
