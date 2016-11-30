@@ -29,7 +29,7 @@ uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	//}
 	//else{
 		hwaddr_t hwaddr=page_translate(addr);
-		printf("%x",hwaddr);
+		printf("0x%x 0x%x\n",addr,hwaddr);
 		return hwaddr_read(hwaddr, len);
 	//}
 }
@@ -41,6 +41,7 @@ void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
 	//}
 	//else{
 		hwaddr_t hwaddr=page_translate(addr);
+		
 		hwaddr_write(hwaddr, len, data);
 	//}
 }
