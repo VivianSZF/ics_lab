@@ -12,6 +12,7 @@ void init_wp_pool();
 void init_ddr3();
 void init_l1cache();
 void init_l2cache();
+void init_TLB();
 
 FILE *log_fp = NULL;
 
@@ -121,4 +122,7 @@ static void load_entry() {
 
 	/*Initialize CR0*/
 	init_CR0();
+
+	/*Initialize TLB*/
+	init_TLB();
 }
