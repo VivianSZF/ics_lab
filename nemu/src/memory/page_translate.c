@@ -24,7 +24,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 			return (tlb[i].data<<12)+lnaddr.offset;
 		}
 	}
-
+	printf("%x\n",addr);
 	PDE dir;
 	dir.val=hwaddr_read((cpu.cr3.page_directory_base<<12)+lnaddr.dir*4,4);
 	if(dir.present==0)
