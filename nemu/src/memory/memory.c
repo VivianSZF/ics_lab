@@ -24,14 +24,14 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
 	assert(len==1||len==2||len==4);
-	//if(addr>){
-	//	assert(0);
-	//}
-	//else{
+	if((addr&0x7)+len>4096){
+		assert(0);
+	}
+	else{
 		hwaddr_t hwaddr=page_translate(addr);
 //		printf("0x%x 0x%x\n",addr,hwaddr);
 		return hwaddr_read(hwaddr, len);
-	//}
+	}
 }
 
 void lnaddr_write(lnaddr_t addr, size_t len, uint32_t data) {
