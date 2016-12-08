@@ -27,8 +27,8 @@ hwaddr_t page_translate(lnaddr_t addr){
 
 	PDE dir;
 	dir.val=hwaddr_read((cpu.cr3.page_directory_base<<12)+lnaddr.dir*4,4);
-	if(dir.present==0)
-		panic("The page is empty in %x/n",addr);
+	//if(dir.present==0)
+	//	panic("The page is empty in %x/n",addr);
 	PTE pagetable;
 	pagetable.val=hwaddr_read((dir.page_frame<<12)+lnaddr.page*4,4);
 	assert(pagetable.present==1);
