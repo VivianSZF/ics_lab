@@ -9,18 +9,18 @@ extern jmp_buf jbuf;
 void raise_intr(uint8_t NO,uint32_t len){
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eflags_val,S_SS);
-	printf("fine1\n");
+//	printf("fine1\n");
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.CS,S_SS);
-	printf("fine2\n");
+//	printf("fine2\n");
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eip+len,S_SS);
-	printf("fine3\n");
+//	printf("fine3\n");
 	uint8_t t[8];
 	int i;
 	for(i=0;i<8;i++){
 		t[i]=lnaddr_read(cpu.IDTR.base+NO*8+i,1);
-		printf("fine\n");
+//		printf("fine\n");
 	}
 	GateDesc *gate=(GateDesc *)t;
 	cpu.CS=gate->segment;
