@@ -55,4 +55,5 @@
 #include "control/lidt.h"
 #include "control/ljmp.h"
 #include "control/int.h"
+#include "control/iret.h"
 
