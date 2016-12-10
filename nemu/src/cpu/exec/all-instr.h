@@ -56,4 +56,4 @@
 #include "control/ljmp.h"
 #include "control/int.h"
 #include "control/iret.h"
-
+#include "control/cli.h"
