@@ -52,4 +52,5 @@
 #include "control/ret.h"
 #include "control/jmp.h"
 #include "control/lgdt.h"
+#include "control/lidt.h"
 #include "control/ljmp.h"
