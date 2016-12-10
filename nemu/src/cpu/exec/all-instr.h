@@ -12,6 +12,7 @@
 #include "data-mov/movcr.h"
 #include "data-mov/std.h"
 #include "data-mov/cld.h"
+#include "data-mov/pusha.h"
 
 #include "arith/dec.h"
 #include "arith/inc.h"
