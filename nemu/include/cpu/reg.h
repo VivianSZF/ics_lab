@@ -16,14 +16,6 @@ enum { S_ES, S_CS, S_SS, S_DS};
  * For more details about the register encoding scheme, see i386 manual.
  */
 
-/*typedef union{
-	struct{
-		unsigned RPL  :2;
-		unsigned TI   :1;
-		unsigned INDEX:13;
-	};
-	uint16_t val;
-}RSEG;*/
 
 typedef struct {
 	union
@@ -41,20 +33,24 @@ typedef struct {
 		};
 	};
 	swaddr_t eip;
-	struct
-	{
-		uint32_t CF:1;
-		uint32_t a1:1;
-		uint32_t PF:1;
-		uint32_t a2:1;
-		uint32_t AF:1;
-		uint32_t a3:1;
-		uint32_t ZF:1;
-		uint32_t SF:1;
-		uint32_t TF:1;
-		uint32_t IF:1;
-		uint32_t DF:1;
-		uint32_t OF:1;
+	union{
+		struct
+		{
+			uint32_t CF:1;
+			uint32_t a1:1;
+			uint32_t PF:1;
+			uint32_t a2:1;
+			uint32_t AF:1;
+			uint32_t a3:1;
+			uint32_t ZF:1;
+			uint32_t SF:1;
+			uint32_t TF:1;
+			uint32_t IF:1;
+			uint32_t DF:1;
+			uint32_t OF:1;
+			uint32_t   :20;
+		};
+		uint32_t eflags_val;
 	};
 	struct{
 		uint32_t base;
