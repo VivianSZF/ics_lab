@@ -1,6 +1,7 @@
 #include <setjmp.h>
 #include "common.h"
 #include "../../lib-common/x86-inc/mmu.h"
+#include "cpu/reg.h"
 #include "cpu/exec/helper.h"
 
 extern jmp_buf jbuf;
