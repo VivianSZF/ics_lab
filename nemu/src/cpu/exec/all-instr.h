@@ -54,3 +54,5 @@
 #include "control/lgdt.h"
 #include "control/lidt.h"
 #include "control/ljmp.h"
+#include "control/int.h"
+
