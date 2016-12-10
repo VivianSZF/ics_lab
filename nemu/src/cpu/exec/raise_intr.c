@@ -16,8 +16,8 @@ void raise_intr(uint8_t NO,uint32_t len){
 	
 	uint8_t t[8];
 	int i;
-//	for(i=0;i<8;i++)
-//		t[i]=lnaddr_read(cpu.IDTR.base+NO*8+i,1);
+	for(i=0;i<8;i++)
+		t[i]=lnaddr_read(cpu.IDTR.base+NO*8+i,1);
 	GateDesc *gate=(GateDesc *)t;
 	cpu.CS=gate->segment;
 	
