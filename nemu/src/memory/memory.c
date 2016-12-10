@@ -59,7 +59,6 @@ void swaddr_write(swaddr_t addr, size_t len, uint32_t data, uint8_t sreg) {
 	assert(len == 1 || len == 2 || len == 4);
 #endif
 	lnaddr_t lnaddr=seg_translate(addr,len,sreg);
-	printf("fine\n");
 	lnaddr_write(lnaddr, len, data);
 }
 
