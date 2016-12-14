@@ -5,6 +5,7 @@
 void add_irq_handle(int, void (*)(void));
 uint32_t mm_brk(uint32_t);
 int fs_ioctl(int, uint32_t, void *);
+void serial_printc(char);
 
 static void sys_brk(TrapFrame *tf) {
 	tf->eax = mm_brk(tf->ebx);
@@ -12,10 +13,18 @@ static void sys_brk(TrapFrame *tf) {
 
 static void sys_ioctl(TrapFrame *tf) {
 	tf->eax = fs_ioctl(tf->ebx, tf->ecx, (void *)tf->edx);
-}
+} 
 
 static void sys_write(TrapFrame *tf) {
+#ifdef HAS_DEVICE
+	int i;
+	for(i=0;i<tf->edx;i++){
+		serial_printc(*(char*)(tf->ecx+i));
+	}
+#else
 	asm volatile (".byte 0xd6": :"a"(2),"c"(tf->ecx),"d"(tf->edx));
+#endif
+
 	tf->eax=tf->edx;
 }
 
@@ -38,6 +47,6 @@ void do_syscall(TrapFrame *tf) {
 		/* TODO: Add more system calls. */
 
 		default: panic("Unhandled system call: id = %d, eip = 0x%08x", tf->eax, tf->eip);
-	}
-}
+ 	}
+} 
 
