@@ -3,7 +3,7 @@
 #define instr call
 
 static void do_execute(){
-	int len=instr_len();
+	int len=getinstr_len();
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eip+len,S_SS);
 	if(op_src->type==OP_TYPE_IMM){

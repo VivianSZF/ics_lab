@@ -3,7 +3,7 @@
 #define instr jmp
 
 static void do_execute(){
-	int len=instr_len();
+	int len=getinstr_len();
 	if(op_src->type==OP_TYPE_IMM){
 		cpu.eip+=(DATA_TYPE_S)op_src->val;
 		print_asm("jmp"str(SUFFIX) " %x",cpu.eip+len+1);

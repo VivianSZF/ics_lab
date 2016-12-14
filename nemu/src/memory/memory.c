@@ -8,18 +8,31 @@ uint32_t l2read(hwaddr_t,size_t);
 void l2write(hwaddr_t,size_t,uint32_t);
 lnaddr_t seg_translate(swaddr_t ,size_t, uint8_t);
 hwaddr_t page_translate(lnaddr_t);
+int is_mmio(hwaddr_t);
+uint32_t mmio_read(hwaddr_t,size_t,int);
+uint32_t mmio_write(hwaddr_t,size_t,uint32_t,int);
 
 /* Memory accessing interfaces */
 
 uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
-//	return dram_read(addr, len) & (~0u >> ((4 - len) << 3));
-	return l1read(addr, len)&(~0u>>((4-len)<<3));
+    int map_NO=is_mmio(addr);
+	if(map_NO==-1){
+		return l1read(addr, len)&(~0u>>((4-len)<<3));
+	}
+	else{
+		return mmio_read(addr,len,map_NO)&(~0u>>((4-len)<<3));
+	}
 } 
 
 void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
-//	dram_write(addr, len, data);
-	l1write(addr,len,data);
-	l2write(addr,len,data);
+	int map_NO=is_mmio(addr);
+	if(map_NO==-1){
+		l1write(addr,len,data);
+		l2write(addr,len,data);
+	}
+	else{
+		mmio_write(addr,len,data,map_NO);
+	}
 }
 
 uint32_t lnaddr_read(lnaddr_t addr, size_t len) {
