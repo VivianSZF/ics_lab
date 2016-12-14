@@ -61,3 +61,4 @@
 #include "control/int.h"
 #include "control/iret.h"
 #include "control/cli.h"
+#include "control/hlt.h"
