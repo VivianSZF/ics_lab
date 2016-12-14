@@ -18,17 +18,17 @@ void create_video_mapping() {
 	 */
 	//panic("please implement me");
 	PDE* updir=get_updir();
-	PTE* ptable=(vptable+(VMEM_ADDR>>12));
-	updir[0].val=make_pde(va_to_pa(ptable));
-	//updir[VMEM_ADDR/PT_SIZE].val=make_pde(va_to_pa(vptable));
+	//PTE* ptable=(vptable+(VMEM_ADDR>>12));
+	//updir[0].val=make_pde(va_to_pa(ptable));
+	updir[VMEM_ADDR/PT_SIZE].val=make_pde(va_to_pa(vptable));
 	int i;
-	for(i=VMEM_ADDR;i<VMEM_ADDR+SCR_SIZE+PAGE_SIZE;i+=PAGE_SIZE){
-		ptable->val=make_pte(i);
-		ptable++;
-	}
-	//for(i=VMEM_ADDR/PAGE_SIZE;i*PAGE_SIZE<VMEM_ADDR+SCR_SIZE;i++){
-	//	vptable[i].val=make_pte(i<<12);
+	//for(i=VMEM_ADDR;i<VMEM_ADDR+SCR_SIZE+PAGE_SIZE;i+=PAGE_SIZE){
+	//	ptable->val=make_pte(i);
+	//	ptable++;
 	//}
+	for(i=VMEM_ADDR/PAGE_SIZE;i*PAGE_SIZE<VMEM_ADDR+SCR_SIZE;i++){
+		vptable[i].val=make_pte(i<<12);
+	}
 	/*PDE* kpdir=get_kpdir();
 	PDE* updir=get_updir();
 	memcpy(&updir[0],&kpdir[0],1*sizeof(PDE));*/
