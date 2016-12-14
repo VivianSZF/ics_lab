@@ -10,7 +10,7 @@ lnaddr_t seg_translate(swaddr_t ,size_t, uint8_t);
 hwaddr_t page_translate(lnaddr_t);
 int is_mmio(hwaddr_t);
 uint32_t mmio_read(hwaddr_t,size_t,int);
-uint32_t mmio_write(hwaddr_t,size_t,uint32_t,int);
+void mmio_write(hwaddr_t,size_t,uint32_t,int);
 
 /* Memory accessing interfaces */
 
