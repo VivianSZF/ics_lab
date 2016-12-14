@@ -38,12 +38,12 @@ static const char ffo_table[] = {
 /* i8259 internal */
 static void do_i8259() {
 	int8_t master_irq = master.highest_irq;
-	if(master_irq == NO_INTR) {
-		/* TODO: Uncomment the following line after the `INTR' member
+ 	if(master_irq == NO_INTR) {
+ 		/* TODO: Uncomment the following line after the `INTR' member
 		 * is added to the CPU_state structure.
 		 */
-		//cpu.INTR = false;
-		panic("uncomment the line above");
+		cpu.INTR = false;
+		//panic("uncomment the line above");
 		return;
 	}
 	else if(master_irq == 2) {
@@ -52,17 +52,17 @@ static void do_i8259() {
 	}
 
 	intr_NO = master_irq + IRQ_BASE;
-	/* TODO: Uncomment the following line after the `INTR' member
+ 	/* TODO: Uncomment the following line after the `INTR' member
 	 * is added to the CPU_state structure.
 	 */
-	// cpu.INTR = true;
-	panic("uncomment the line above");
+	cpu.INTR = true;
+	//panic("uncomment the line above");
 }
 
 /* device interface */
 void i8259_raise_intr(int n) {
 	assert(n >= 0 && n < 16);
-	if(n < 8) {
+ 	if(n < 8) {
 		master.IRR |= MASK(n);
 	}
 	else {
@@ -71,7 +71,7 @@ void i8259_raise_intr(int n) {
 		master.IRR |= MASK(2);
 
 		slave.highest_irq = ffo_table[slave.IRR & ~slave.IMR];
-	}
+ 	}
 
 	master.highest_irq = ffo_table[master.IRR & ~master.IMR];
 
