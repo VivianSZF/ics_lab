@@ -94,7 +94,7 @@ void cpu_exec(volatile uint32_t n) {
 			i8259_ack_intr();
 			int len;
 			len=getinstr_len();
-			cpu.eip-=len;
+			cpu.eip--;
 			raise_intr(intr_no,len);
 		}
 	}
