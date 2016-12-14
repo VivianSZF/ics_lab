@@ -15,7 +15,7 @@ make_helper(concat(in_r_,SUFFIX)){
 	uint16_t p=reg_w(R_DX);
 	REG(R_EAX)=(DATA_TYPE)pio_read(p,DATA_BYTE);
 	print_asm("in");
-	return 2;
+	return 1;
 }
 
 #include "cpu/exec/template-end.h"
