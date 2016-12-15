@@ -1,6 +1,6 @@
 #include "common.h"
 #include "memory.h"
-
+#include <stdio.h>
 void init_page();
 void init_serial();
 void init_ide();
@@ -54,7 +54,7 @@ void init_cond() {
 
 	/* Initialize the serial port. After that, you can use printk() to output messages. */
 	init_serial();
-	Log("here");
+	printf("here");
 	/* Initialize the IDE driver. */
 	init_ide();
 
