@@ -1,6 +1,6 @@
 #include "common.h"
 #include "memory.h"
-#include <stdio.h>
+
 void init_page();
 void init_serial();
 void init_ide();
@@ -41,7 +41,7 @@ void init_cond() {
 #ifdef IA32_INTR
 	/* Reset the GDT, since the old GDT in start.S cannot be used in the future. */
 	init_segment();
-	printf("here");
+
 	/* Set the IDT by setting up interrupt and exception handlers.
 	 * Note that system call is the only exception implemented in NEMU.
 	 */
@@ -54,7 +54,7 @@ void init_cond() {
 	
 	/* Initialize the serial port. After that, you can use printk() to output messages. */
 	init_serial();
-
+	panic("here!!!");
 	/* Initialize the IDE driver. */
 	init_ide();
 
