@@ -43,7 +43,7 @@ buf_fetch(uint32_t sector) {
 		}
 		/* issue a read command */
 		disk_do_read(&ptr->content, sector);
-assert(0);
+
 		ptr->used = true;
 		ptr->sector = sector;
 		ptr->dirty = false;
