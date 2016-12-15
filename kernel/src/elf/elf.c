@@ -40,11 +40,11 @@ uint32_t loader() {
 	for(i=0;i<elf->e_phnum;i++ ) {
 		/* Scan the program header table, load each segment into memory */
 		ph=(Elf32_Phdr *)(void*)(buf+elf->e_phoff+i*elf->e_phentsize);
-		if(ph->p_type == PT_LOAD) {
-			/* TODO: read the content of the segment from the ELF file 
+	 	if(ph->p_type == PT_LOAD) {
+	 		/* TODO: read the content of the segment from the ELF file 
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
-			uint32_t addr=mm_malloc(ph->p_vaddr,ph->p_memsz);
+			uint32_t addr=mm_malloc(ph->p_vaddr,ph->p_memsz);assert(0);
 #ifdef HAS_DEVICE
 			ide_read((uint8_t*)addr,ELF_OFFSET_IN_DISK+ph->p_offset,ph->p_filesz);
 #else
@@ -71,7 +71,6 @@ uint32_t loader() {
 	mm_malloc(KOFFSET - STACK_SIZE, STACK_SIZE);
 
 #ifdef HAS_DEVICE
-	assert(0);
 	create_video_mapping();
 #endif
 
