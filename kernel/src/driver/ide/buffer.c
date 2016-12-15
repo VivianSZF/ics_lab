@@ -40,10 +40,10 @@ buf_fetch(uint32_t sector) {
 		if (ptr->used == true && ptr->dirty == true) {
 			/* write back */
 			disk_do_write(&ptr->content, ptr->sector);
-		}assert(0);
+		}
 		/* issue a read command */
 		disk_do_read(&ptr->content, sector);
-
+assert(0);
 		ptr->used = true;
 		ptr->sector = sector;
 		ptr->dirty = false;
