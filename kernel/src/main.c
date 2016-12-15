@@ -54,10 +54,10 @@ void init_cond() {
 	
 	/* Initialize the serial port. After that, you can use printk() to output messages. */
 	init_serial();
-	panic("here!!!");
+
 	/* Initialize the IDE driver. */
 	init_ide();
-
+	panic("here");
 	/* Enable interrupts. */
 	sti();
 #endif
