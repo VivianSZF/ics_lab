@@ -71,13 +71,14 @@ void init_cond() {
 	 * Note that the output is actually performed only when
 	 * the serial port is available in NEMU.
 	 */
-	assert(0);
+	
 	Log("Hello, NEMU world!");
 
 #if defined(IA32_PAGE) && defined(HAS_DEVICE)
 	/* Write some test data to the video memory. */
 	video_mapping_write_test();
 #endif
+	assert(0);
 	/* Load the program. */
 	uint32_t eip = loader();
 	
