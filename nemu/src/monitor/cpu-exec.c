@@ -16,7 +16,7 @@ bool check_wp();
 
 uint32_t i8259_query_intr();
 void i8259_ack_intr();
-void raise_intr(uint8_t,uint32_t);
+void raise_intr(uint8_t);
 
 char assembly[80];
 char asm_buf[128];
@@ -88,14 +88,11 @@ void cpu_exec(volatile uint32_t n) {
 #endif
 
 		if(nemu_state != RUNNING) { return; }
-assert(0);
+
 		if(cpu.INTR & cpu.IF){
 			uint32_t intr_no=i8259_query_intr();
 			i8259_ack_intr();
-			int len;
-			len=getinstr_len();
-			cpu.eip--;
-			raise_intr(intr_no,len);
+			raise_intr(intr_no);
 		}
 	}
 
