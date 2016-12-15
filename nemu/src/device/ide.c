@@ -76,7 +76,7 @@ void ide_io_handler(ioaddr_t addr, size_t len, bool is_write) {
 
 			byte_cnt += 4;
 			if(byte_cnt == 512) {
-				/* finish */printf("yes");
+				/* finish */assert(0);
 				ide_port_base[7] = 0x40;
 			}
 		}
