@@ -82,7 +82,7 @@ typedef struct {
 		uint32_t base;
 		uint32_t limit;
 	}segcache[4];
-    volatile bool INTR; 	
+    bool INTR; 	
 }CPU_state;
 
 
