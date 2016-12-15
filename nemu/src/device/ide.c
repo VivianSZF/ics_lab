@@ -18,7 +18,7 @@ static bool ide_write;
 static FILE *disk_fp;
 
 void ide_io_handler(ioaddr_t addr, size_t len, bool is_write) {
-	printf("%d\n",byte_cnt);
+//	printf("%d\n",byte_cnt);
 	assert(byte_cnt <= 512);
 	int ret;
 	if(is_write) {
