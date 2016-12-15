@@ -20,7 +20,7 @@ uint32_t hwaddr_read(hwaddr_t addr, size_t len) {
 		return l1read(addr, len)&(~0u>>((4-len)<<3));
 	}
 	else{
-		return mmio_read(addr,len,map_NO)&(~0u>>((4-len)<<3));
+		return mmio_read(addr,len,map_NO);//&(~0u>>((4-len)<<3));
 	}
 } 
 
@@ -30,7 +30,7 @@ void hwaddr_write(hwaddr_t addr, size_t len, uint32_t data) {
 		l1write(addr,len,data);
 		l2write(addr,len,data);
 	}
-	else{
+ 	else{
 		mmio_write(addr,len,data,map_NO);
 	}
 }
