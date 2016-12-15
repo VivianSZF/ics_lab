@@ -45,7 +45,6 @@ uint32_t loader() {
 			 * to the memory region [VirtAddr, VirtAddr + FileSiz)
 			 */
 			uint32_t addr=mm_malloc(ph->p_vaddr,ph->p_memsz);
-			Log("i'm here");
 #ifdef HAS_DEVICE
 			ide_read((uint8_t*)addr,ELF_OFFSET_IN_DISK+ph->p_offset,ph->p_filesz);
 #else
