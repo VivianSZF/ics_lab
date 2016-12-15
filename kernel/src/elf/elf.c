@@ -72,6 +72,7 @@ uint32_t loader() {
 
 #ifdef HAS_DEVICE
 	create_video_mapping();
+	assert(0);
 #endif
 
 	write_cr3(get_ucr3());
