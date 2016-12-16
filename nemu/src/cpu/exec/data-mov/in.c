@@ -12,5 +12,6 @@
 #include "in-template.h"
 #undef DATA_BYTE
 
-make_helper_v(in_i)
-make_helper_v(in_r)
+make_helper_v(in);
+//make_helper_v(in_i)
+//make_helper_v(in_r)
