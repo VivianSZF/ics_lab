@@ -21,5 +21,5 @@ make_helper(iret){
 	cpu.esp+=4;
 //	longjmp(jbuf,1);
 	print_asm("iret");
-	return 0;
+	return 1;
 }
