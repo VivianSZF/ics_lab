@@ -1,7 +1,7 @@
 #include "cpu/exec/helper.h"
 #include "../../lib-common/x86-inc/mmu.h"
 #include <setjmp.h>
-extern jmp_buf jbuf;
+//extern jmp_buf jbuf;
 
 make_helper(iret){
 	cpu.eip=swaddr_read(cpu.esp,4,S_SS);
@@ -19,7 +19,7 @@ make_helper(iret){
 	
 	cpu.eflags_val=swaddr_read(cpu.esp,4,S_SS);
 	cpu.esp+=4;
-	longjmp(jbuf,1);
+//	longjmp(jbuf,1);
 	print_asm("iret");
 	return 0;
 }
