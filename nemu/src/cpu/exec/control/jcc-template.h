@@ -154,7 +154,7 @@ static void do_execute(){
  	{
 		print_asm("jl %x",cpu.eip+dis+len+1);
 	}
- }
+ } 
 make_instr_helper(i)
 #undef instr
 
@@ -164,10 +164,25 @@ static void do_execute(){
 	if(cpu.SF==1){
 		cpu.eip+=dis;
 		print_asm("js %x",cpu.eip+len+1);
+ 	}
+	else
+ 	{
+		print_asm("js %x",cpu.eip+dis+len+1);
+	}
+ }
+make_instr_helper(i)
+#undef instr
+
+#define instr jae
+static void do_execute(){
+	DATA_TYPE_S dis=op_src->val;
+	if(cpu.CF==0){
+		cpu.eip+=dis;
+		print_asm("jae %x",cpu.eip+len+1);
 	}
 	else
 	{
-		print_asm("js %x",cpu.eip+dis+len+1);
+		print_asm("jae %x",cpu.eip+dis+len+1);
 	}
 }
 make_instr_helper(i)

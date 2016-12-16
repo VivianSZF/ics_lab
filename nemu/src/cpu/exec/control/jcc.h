@@ -23,5 +23,6 @@ make_helper(jl_i_b);
 make_helper(jl_i_v);
 make_helper(js_i_b);
 make_helper(js_i_v);
-
+make_helper(jae_i_b);
+make_helper(jae_i_v);
 #endif
