@@ -17,7 +17,20 @@ static int key_state[NR_KEYS];
 void
 keyboard_event(void) {
 	/* TODO: Fetch the scancode and update the key states. */
-	assert(0);
+	uint32_t key_code=in_byte(0x60);
+	int i;
+	for(i=0;i<NR_KEYS;i++){
+		if(keycode_array[i]==(key_code&0x7f)){
+			if((key_code&0x80)!=0){
+				key_state[i]=KEY_STATE_RELEASE;
+			}
+			else if(key_state[i]==KEY_STATE_EMPTY){
+				key_state[i]=KEY_STATE_PRESS;
+			}
+			break;
+		}
+	}				
+	//assert(0);
 }
 
 static inline int
@@ -55,7 +68,22 @@ process_keys(void (*key_press_callback)(int), void (*key_release_callback)(int))
 	 * Remember to enable interrupts before returning from the function.
 	 */
 
-	assert(0);
+//	assert(0);
+	int i;
+	for(i=0;i<NR_KEYS;i++){
+		if(key_state[i]==KEY_STATE_PRESS){
+			key_press_callback(get_keycode(i));
+			release_key(i);
+			sti();
+			return true;
+		}
+		else if(key_state[i]==KEY_STATE_RELEASE){
+			key_release_callback(get_keycode(i));
+			clear_key(i);
+			sti();
+			return true;
+		}
+	}
 	sti();
 	return false;
 }
