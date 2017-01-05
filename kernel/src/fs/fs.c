@@ -1,6 +1,6 @@
 #include "common.h"
 #include <sys/ioctl.h>
-
+#include <string.h>
 typedef struct {
 	char *name;
 	uint32_t size;
@@ -37,4 +37,106 @@ void ide_read(uint8_t *, uint32_t, uint32_t);
 void ide_write(uint8_t *, uint32_t, uint32_t);
 
 /* TODO: implement a simplified file system here. */
+typedef struct{
+	bool opened;
+	uint32_t offset;
+}Fstate;
+Fstate fi[NR_FILES+3];
 
+int fs_open(const char *pathname,int flags);
+int fs_read(int fd,void *buf,int len);
+int fs_write(int fd,void *buf,int len);
+int fs_lseek(int fd,int offset,int whence);
+int fs_close(int fd);
+void serial_printc(char);
+
+int fs_open(const char *pathname,int flags){
+	int i;
+	for(i=3;i<NR_FILES+3;i++){
+		if(strcmp(file_table[i-3].name,pathname)==0){
+			fi[i].opened=true;
+			fi[i].offset=0;
+			return i;
+		}
+	}
+	assert(0);
+	return -1;
+}
+
+int fs_read(int fd,void *buf,int len){
+	if(fi[fd].opened==false)
+		return -1;
+	if(fd>2&&fd<(NR_FILES+3)){
+		int k=file_table[fd-3].size-fi[fd].offset;
+		if(len>k) len=k;
+		ide_read(buf,file_table[fd-3].disk_offset+fi[fd].offset,len);
+		fi[fd].offset+=len;
+		return len;
+	}
+	else{
+		assert(0);
+		return -1;
+	}
+}
+
+int fs_write(int fd,void *buf, int len){
+	if(fd==1||fd==2){
+		int i;
+		for(i=0;i<len;i++) serial_printc(((char*)buf)[i]);
+		return len;
+	}
+	else if(fd>2&&fd<(NR_FILES+3)&&fi[fd].opened){
+		int k=file_table[fd-3].size-fi[fd].offset;
+		if(len>k) len=k;
+		ide_write(buf,file_table[fd-3].disk_offset+fi[fd].offset,len);
+		fi[fd].offset+=len;
+		return len;
+	}
+	else{
+		assert(0);
+		return -1;
+	}
+}
+
+int fs_lseek(int fd,int offset,int whence){
+	if(fi[fd].opened==false) return -1;
+	int of=0x7fffffff;
+	if(fd>2&&fd<NR_FILES+3){
+		switch(whence){
+			case SEEK_SET:
+				of=offset;
+				break;
+			case SEEK_CUR:
+				of=fi[fd].offset+offset;
+				break;
+			case SEEK_END:
+				of=file_table[fd-3].size+offset;
+				break;
+			default:
+				assert(0);
+				break;
+		}
+		if(of>=0&&of<=file_table[fd-3].size){
+		    fi[fd].offset=of;
+			return fi[fd].offset;
+		}
+		else{
+			assert(0);
+			return -1;
+		}
+	}
+	else{
+		assert(0);
+		return -1;
+	}
+}
+
+int fs_close(int fd){
+	if(fd>2&&fd<NR_FILES+3){
+		fi[fd].opened=false;
+		fi[fd].offset=0;
+		return 0;
+	}
+	assert(0);
+	return -1;
+}
