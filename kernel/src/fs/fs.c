@@ -52,6 +52,7 @@ void serial_printc(char);
 
 int fs_open(const char *pathname,int flags){
 	int i;
+	Log("openennnn!%s",pathname);
 	for(i=3;i<NR_FILES+3;i++){
 		if(strcmp(file_table[i-3].name,pathname)==0){
 			fi[i].opened=true;
@@ -66,6 +67,7 @@ int fs_open(const char *pathname,int flags){
 int fs_read(int fd,void *buf,int len){
 	if(fi[fd].opened==false)
 		return -1;
+	Log("readdddddd%d",fd);
 	if(fd>2&&fd<(NR_FILES+3)){
 		int k=file_table[fd-3].size-fi[fd].offset;
 		if(len>k) len=k;
@@ -130,13 +132,11 @@ int fs_lseek(int fd,int offset,int whence){
 		return -1;
 	}
 }
-
 int fs_close(int fd){
 	if(fd>2&&fd<NR_FILES+3){
 		fi[fd].opened=false;
 		fi[fd].offset=0;
 		return 0;
 	}
-	assert(0);
 	return -1;
 }
