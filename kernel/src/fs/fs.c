@@ -70,7 +70,9 @@ int fs_read(int fd,void *buf,int len){
 	Log("readdddddd%d",fd);
 	if(fd>2&&fd<(NR_FILES+3)){
 		int k=file_table[fd-3].size-fi[fd].offset;
+		Log("k%d len%d",k,len);
 		if(len>k) len=k;
+		
 		ide_read(buf,file_table[fd-3].disk_offset+fi[fd].offset,len);
 		fi[fd].offset+=len;
 		return len;
