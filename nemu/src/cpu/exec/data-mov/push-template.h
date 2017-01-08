@@ -12,7 +12,7 @@ static void do_execute(){
 		swaddr_write(cpu.esp,4,op_src->val,S_SS);
 	}
 	else if(DATA_BYTE==1){
-		int val=op_src->val;
+		int val=(DATA_TYPE_S)op_src->val;
 		cpu.esp-=4;
 		swaddr_write(cpu.esp,4,val,S_SS);
 	}
