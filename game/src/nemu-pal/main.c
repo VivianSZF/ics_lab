@@ -273,7 +273,7 @@ PAL_SplashScreen(
       fprintf(stderr, "ERROR: PAL_SplashScreen(): palette == NULL\n");
       return;
    }
-
+	Log("1");
    //
    // Allocate all the needed memory at once for simplification
    //
@@ -281,6 +281,7 @@ PAL_SplashScreen(
    buf2 = (LPBYTE)(buf + 320 * 200);
    lpSpriteCrane = (LPSPRITE)buf2 + 32000;
 
+	Log("2");
    //
    // Create the surfaces
    //
@@ -299,6 +300,7 @@ PAL_SplashScreen(
    SDL_SetPalette(lpBitmapUp, SDL_LOGPAL | SDL_PHYSPAL, VIDEO_GetPalette(), 0, 256);
 #endif
 
+	Log("3");
    //
    // Read the bitmaps
    //
@@ -318,6 +320,7 @@ PAL_SplashScreen(
    lpBitmapTitle[2] = 0;
    lpBitmapTitle[3] = 0; // HACKHACK
 
+	Log("4");
    //
    // Generate the positions of the cranes
    //
@@ -328,6 +331,7 @@ PAL_SplashScreen(
       cranepos[i][2] = RandomLong(0, 8);
    }
 
+	Log("5");
    //
    // Play the title music
    //
@@ -337,6 +341,7 @@ PAL_SplashScreen(
       PAL_PlayMUS(NUM_RIX_TITLE, TRUE, 2);
    }
 
+	Log("6");
    //
    // Clear all of the events and key states
    //
@@ -355,6 +360,7 @@ PAL_SplashScreen(
       PAL_ProcessEvent();
       dwTime = SDL_GetTicks() - dwBeginTime;
 
+	Log("7");
       //
       // Set the palette
       //
@@ -377,6 +383,7 @@ PAL_SplashScreen(
       SDL_SetPalette(lpBitmapUp, SDL_LOGPAL | SDL_PHYSPAL, VIDEO_GetPalette(), 0, 256);
 #endif
 
+	Log("8");
       //
       // Draw the screen
       //
@@ -385,6 +392,7 @@ PAL_SplashScreen(
          iImgPos--;
       }
 
+	Log("9");
       //
       // The upper part...
       //
@@ -396,6 +404,7 @@ PAL_SplashScreen(
 
       SDL_BlitSurface(lpBitmapUp, &srcrect, gpScreen, &dstrect);
 
+	Log("a");
       //
       // The lower part...
       //
@@ -485,6 +494,7 @@ PAL_SplashScreen(
          break;
       }
 
+	Log("b");
       //
       // Delay a while...
       //
@@ -504,7 +514,7 @@ PAL_SplashScreen(
    {
       PAL_PlayMUS(0, FALSE, 1);
    }
-
+Log("final");
    PAL_FadeOut(1);
 }
 
