@@ -802,6 +802,7 @@ PAL_MKFReadChunk(
 
    if (uiChunkLen != 0)
    {
+	   Log("123123 %d",uiChunkLen);
       fseek(fp, uiOffset, SEEK_SET);
       fread(lpBuffer, uiChunkLen, 1, fp);
    }
