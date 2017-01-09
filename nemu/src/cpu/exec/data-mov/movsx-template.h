@@ -4,7 +4,7 @@
 
 static void do_execute(){
 	DATA_TYPE num;
-	if(ops_decoded.opcode==0x0fbf)
+	if(ops_decoded.opcode==0x01bf)
 		num=(((DATA_TYPE_S)op_src->val)<<16)>>16;
 	else
 	{	

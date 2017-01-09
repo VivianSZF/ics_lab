@@ -787,9 +787,10 @@ PAL_MKFReadChunk(
    fseek(fp, 4 * uiChunkNum, SEEK_SET);
    fread(&uiOffset, 4, 1, fp);
    fread(&uiNextOffset, 4, 1, fp);
+
    uiOffset = SWAP32(uiOffset);
    uiNextOffset = SWAP32(uiNextOffset);
-
+Log("ui %d  %d",uiOffset,uiNextOffset);
    //
    // Get the length of the chunk.
    //
