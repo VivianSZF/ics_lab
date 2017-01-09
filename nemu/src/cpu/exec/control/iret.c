@@ -19,7 +19,7 @@ make_helper(iret){
 	
 	cpu.eflags_val=swaddr_read(cpu.esp,4,S_SS);
 	cpu.esp+=4;
-	cpu.eip--;
+//	cpu.eip--;
 //	longjmp(jbuf,1);
 	print_asm("iret");
 	return 1;
