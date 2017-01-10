@@ -31,7 +31,7 @@ make_helper(concat(mov_moffs2a_, SUFFIX)) {
 make_helper(concat(mov_rm2s_,SUFFIX)){
 		uint32_t num=instr_fetch(eip+1,1);
 		uint8_t reg=num&0x7;
-		uint8_t regnum=(num&0x38)>>3;
+		uint8_t regnum=(num>>3)&7;
 		cpu.sreg[regnum].val=REG(reg);
 		print_asm("mov %%%s %x" ,REG_NAME(reg), regnum);
 		return 2;

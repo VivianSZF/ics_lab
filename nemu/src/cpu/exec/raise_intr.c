@@ -5,7 +5,7 @@
 #include "cpu/exec/helper.h"
 
 extern jmp_buf jbuf;
-
+void synthesreg(uint8_t);
 void raise_intr(uint8_t NO){
 	cpu.esp-=4;
 	swaddr_write(cpu.esp,4,cpu.eflags_val,S_SS);
@@ -25,12 +25,7 @@ void raise_intr(uint8_t NO){
 	GateDesc *gate=(GateDesc *)t;
 	cpu.CS=gate->segment;
 	
-	uint8_t t1[8];
-	for(i=0;i<8;i++)
-		t1[i]=lnaddr_read(cpu.GDTR.base+cpu.sreg[S_CS].INDEX*8+i,1);
-	SegDesc *segd=(SegDesc *)t1;
-	cpu.segcache[S_CS].base=segd->base_15_0+(segd->base_23_16<<16)+(segd->base_31_24<<24);
-	cpu.segcache[S_CS].valid=true;
+	synthesreg(S_CS);
 
 	cpu.eip=gate->offset_15_0+(gate->offset_31_16<<16);
 

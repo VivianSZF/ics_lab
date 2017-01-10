@@ -12,7 +12,6 @@ make_helper(concat(movcr_cr2r_,SUFFIX)){
 		reg_l(reg)=cpu.cr0.val;
 	else if(choose==3){
 		reg_l(reg)=cpu.cr3.val;
-		init_TLB();
 	}
 	print_asm("mov cr%d %%%s",choose,regsl[reg]);
 	return 2;
