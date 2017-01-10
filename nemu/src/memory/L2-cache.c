@@ -24,7 +24,7 @@ void dram_write(hwaddr_t addr, size_t len, uint32_t data);
 void init_l2cache(){
 	memset(l2cache, 0, sizeof(l2cache));
 }
-
+/*
 static int hitornot(uint32_t index,uint32_t tag){
 	uint32_t i;
 	for(i=0;i<WAY_SIZE;i++){
@@ -42,7 +42,7 @@ static int fullornot(uint32_t index){
 	}
 	return i;
 }
-
+*/
 static void write_back(uint32_t index,uint32_t way){
 	if(l2cache[index].dirtybit[way]){
 		uint32_t i;
@@ -60,7 +60,7 @@ static void l2set_read(hwaddr_t addr, void*data){
 	uint32_t in=ad.index2;
 	uint32_t ta=ad.tag2;
 
-
+/*
 	uint32_t ans=hitornot(in,ta);
 	if(ans<16){
 		memcpy(data,l2cache[in].data[ans]+of,BURST_LEN);
@@ -80,7 +80,7 @@ static void l2set_read(hwaddr_t addr, void*data){
 			l2cache[in].data[ans][i]=dram_read((addr&(~MASK))+i,1);
 		memcpy(data,l2cache[in].data[ans]+of,BURST_LEN);
 		}
-/*
+*/
 	bool full=true;
 	bool find=false;
 	uint32_t row, k;
@@ -101,7 +101,7 @@ static void l2set_read(hwaddr_t addr, void*data){
 		if (full) { 
 			srand(time(0));
 			k=rand()%WAY_SIZE;
-			writeback(in, k);
+			write_back(in, k);
 		}
 		l2cache[in].validbit[k]=true;
 		l2cache[in].dirtybit[k]=false;
@@ -109,12 +109,12 @@ static void l2set_read(hwaddr_t addr, void*data){
 		int i;
 		for(i=0;i<BLOCK_SIZE;i++)
 			l2cache[in].data[k][i]=dram_read((addr&(~MASK))+i,1);
-		memcpy(data,l2cache[in].data[ans]+of,BURST_LEN);
+		memcpy(data,l2cache[in].data[k]+of,BURST_LEN);
 
 	}
 
 
-*/
+
 
 
 
@@ -138,7 +138,7 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 	uint32_t ta=ad.tag2;
 
 
-	
+/*	
 	uint32_t ans=hitornot(in,ta);
 	if(ans<16){
 		memcpy_with_mask(l2cache[in].data[ans]+of,data,BURST_LEN,mask);
@@ -148,7 +148,7 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 		ans=fullornot(in);
 		if(ans>=8){
 			srand(time(0));
-			ans=rand()%WAY_SIZE;
+			k=rand()%WAY_SIZE;
 			write_back(in,ans);
 		}
 		l2cache[in].validbit[ans]=true;
@@ -157,10 +157,10 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 		int i;
 		for(i=0;i<BLOCK_SIZE;i++)
 			l2cache[in].data[ans][i]=dram_read((addr&(~MASK))+i,1);
-		memcpy_with_mask(l2cache[in].data[ans]+of,data,BURST_LEN,mask);
+		memcpy_with_mask(l2cache[in].data[k]+of,data,BURST_LEN,mask);
 	}
 	
-/*
+*/
 	uint32_t row, k;
 	bool find=false, full=true;
 	for (row=0; row<WAY_SIZE; row++) {
@@ -168,7 +168,7 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 			if (l2cache[in].tag[row]==ta) {
 				memcpy_with_mask(l2cache[in].data[row] +of, data, BURST_LEN, mask);
 				find=true;
-				l2cache[in].dirty[row]=true;
+				l2cache[in].dirtybit[row]=true;
 				break;
 			}
 		}
@@ -180,14 +180,20 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 	if (find==false) {
 		if (full) {
 			srand(time(0));
-			ans=rand()%WAY_SIZE;
-			writeback(in, k);
+			k=rand()%WAY_SIZE;
+			write_back(in, k);
 		}
-		
-		memcpy_with_mask(L2_cache[set].data[k] + col, data, BURST_LEN, mask);
+		l2cache[in].validbit[k]=true;
+		l2cache[in].dirtybit[k]=false;
+		l2cache[in].tag[k]=ta;
+		int i;
+		for(i=0;i<BLOCK_SIZE;i++)
+			l2cache[in].data[k][i]=dram_read((addr&(~MASK))+i,1);
+
+		memcpy_with_mask(l2cache[in].data[k] +of, data, BURST_LEN, mask);
 	}
 
-*/
+
 
 
 }
