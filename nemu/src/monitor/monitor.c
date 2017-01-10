@@ -123,7 +123,7 @@ static void load_entry() {
 
 	/*Initialize cache. */
 	init_l1cache();
-	init_l2cache();
+	//init_l2cache();
 
 	/*Initialize CR0*/
 	init_CR0();
