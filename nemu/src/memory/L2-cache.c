@@ -21,7 +21,10 @@ uint32_t dram_read(hwaddr_t, size_t);
 void dram_write(hwaddr_t, size_t, uint32_t);
 
 void init_l2cache(){
-	memset(l2cache, 0, sizeof(l2cache));
+	int i,j;
+	for(i=0;i<INDEX_SIZE;i++)
+		for(j=0;j<WAY_SIZE;j++)
+			l2cache[i].validbit[j]=false;
 }
 /*
 static int hitornot(uint32_t index,uint32_t tag){

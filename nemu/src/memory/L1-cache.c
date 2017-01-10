@@ -18,7 +18,10 @@ L1_cache l1cache[INDEX_SIZE];
 uint32_t l2read(hwaddr_t, size_t);
 
 void init_l1cache(){
-	memset(l1cache,0,sizeof(l1cache));
+	int i,j;
+	for(i=0;i<INDEX_SIZE;i++)
+		for(j=0;j<WAY_SIZE;j++)
+			l1cache[i].validbit[j]=false;
 }
 
 static void l1set_read(hwaddr_t addr, void*data){
