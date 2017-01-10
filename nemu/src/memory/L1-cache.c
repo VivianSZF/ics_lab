@@ -20,7 +20,7 @@ uint32_t l2read(hwaddr_t, size_t);
 void init_l1cache(){
 	memset(l1cache,0,sizeof(l1cache));
 }
-/*
+
 static int hitornot(uint32_t index,uint32_t tag){
 	uint32_t i;
 	for(i=0;i<WAY_SIZE;i++){
@@ -38,7 +38,7 @@ static int fullornot(uint32_t index){
  	}
 	return i;
 }
-*/
+
 static void l1set_read(hwaddr_t addr, void*data){
 	Assert(addr<HW_MEM_SIZE,"physical address %x is outside of the physical memory!",addr);
 	cache_addr ad;
@@ -46,15 +46,15 @@ static void l1set_read(hwaddr_t addr, void*data){
 	uint32_t of=ad.offset1;
 	uint32_t in=ad.index1;
 	uint32_t ta=ad.tag1;
-	//uint32_t ans=hitornot(in,ta);
-	/*
-
+	uint32_t ans=hitornot(in,ta);
+	
+/*
 	uint32_t i;
 	for(i=0;i<WAY_SIZE;i++){
 		if(l1cache[index].validbit[i]&&(l1cache[index].tag[i]==tag))
 				break;
   	}
-*/
+
 	bool full=true;
 	bool find=false;
 	uint32_t row, k;
@@ -86,8 +86,8 @@ static void l1set_read(hwaddr_t addr, void*data){
 		}
 		memcpy(data, l1cache[in].data[k]+of, BURST_LEN);
 	}
+*/
 
-/*
 	if(ans<8){
 		memcpy(data,l1cache[in].data[ans]+of,BURST_LEN);
  	}
@@ -103,7 +103,7 @@ static void l1set_read(hwaddr_t addr, void*data){
 		for(i=0;i<BLOCK_SIZE;i++)
 			l1cache[in].data[ans][i]=l2read((addr&(~MASK))+i,1);
 		memcpy(data,l1cache[in].data[ans]+of,BURST_LEN);
- 		}*/
+ 		}
 } 
 uint32_t l1read(hwaddr_t addr,size_t len){
 	uint32_t offset=addr&BURST_MASK;
@@ -122,10 +122,11 @@ static void l1set_write(hwaddr_t addr,void *data,uint8_t *mask){
 	uint32_t of=ad.offset1;
 	uint32_t in=ad.index1;
 	uint32_t ta=ad.tag1;
-	/*uint32_t ans=hitornot(in,ta);
+	uint32_t ans=hitornot(in,ta);
  	if(ans<8){
 		memcpy_with_mask(l1cache[in].data[ans]+of,data,BURST_LEN,mask);
-	}*/
+	}
+	/*
 	uint32_t row;
 	for (row=0; row<WAY_SIZE; row++) {
 		if(l1cache[in].validbit[row] && l1cache[in].tag[row]==ta) {
@@ -133,7 +134,7 @@ static void l1set_write(hwaddr_t addr,void *data,uint8_t *mask){
 			break;
 		}
 	}
-
+	*/
 	
 }
 void l1write(hwaddr_t addr,size_t len,uint32_t data){

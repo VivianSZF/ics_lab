@@ -59,6 +59,8 @@ static void l2set_read(hwaddr_t addr, void*data){
 	uint32_t of=ad.offset2;
 	uint32_t in=ad.index2;
 	uint32_t ta=ad.tag2;
+
+
 	uint32_t ans=hitornot(in,ta);
 	if(ans<16){
 		memcpy(data,l2cache[in].data[ans]+of,BURST_LEN);
@@ -78,6 +80,44 @@ static void l2set_read(hwaddr_t addr, void*data){
 			l2cache[in].data[ans][i]=dram_read((addr&(~MASK))+i,1);
 		memcpy(data,l2cache[in].data[ans]+of,BURST_LEN);
 		}
+/*
+	bool full=true;
+	bool find=false;
+	uint32_t row, k;
+	for (row=0; row<WAY_SIZE; row++) {
+		if (l2cache[in].validbit[row]) {
+			if (l2cache[in].tag[row]==ta) {
+				memcpy(data, l2cache[in].data[row]+of, BURST_LEN);
+				find=true;
+				break;
+			}
+		}
+		else {
+			full=false;
+			k=row;
+		}
+	}
+	if (find==false) {
+		if (full) { 
+			srand(time(0));
+			k=rand()%WAY_SIZE;
+			writeback(in, k);
+		}
+		l2cache[in].validbit[k]=true;
+		l2cache[in].dirtybit[k]=false;
+		l2cache[in].tag[k]=ta;
+		int i;
+		for(i=0;i<BLOCK_SIZE;i++)
+			l2cache[in].data[k][i]=dram_read((addr&(~MASK))+i,1);
+		memcpy(data,l2cache[in].data[ans]+of,BURST_LEN);
+
+	}
+
+
+*/
+
+
+
 } 
 uint32_t l2read(hwaddr_t addr,size_t len){
 	uint32_t offset=addr&BURST_MASK;
@@ -96,6 +136,9 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 	uint32_t of=ad.offset2;
 	uint32_t in=ad.index2;
 	uint32_t ta=ad.tag2;
+
+
+	
 	uint32_t ans=hitornot(in,ta);
 	if(ans<16){
 		memcpy_with_mask(l2cache[in].data[ans]+of,data,BURST_LEN,mask);
@@ -112,10 +155,41 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 		l2cache[in].dirtybit[ans]=false;
 		l2cache[in].tag[ans]=ta;
 		int i;
-		for(i=0;i<WAY_SIZE;i++)
+		for(i=0;i<BLOCK_SIZE;i++)
 			l2cache[in].data[ans][i]=dram_read((addr&(~MASK))+i,1);
 		memcpy_with_mask(l2cache[in].data[ans]+of,data,BURST_LEN,mask);
 	}
+	
+/*
+	uint32_t row, k;
+	bool find=false, full=true;
+	for (row=0; row<WAY_SIZE; row++) {
+		if (l2cache[in].validbit[row]) {
+			if (l2cache[in].tag[row]==ta) {
+				memcpy_with_mask(l2cache[in].data[row] +of, data, BURST_LEN, mask);
+				find=true;
+				l2cache[in].dirty[row]=true;
+				break;
+			}
+		}
+		else {
+			full=false;
+			k=row;
+		}
+	}
+	if (find==false) {
+		if (full) {
+			srand(time(0));
+			ans=rand()%WAY_SIZE;
+			writeback(in, k);
+		}
+		
+		memcpy_with_mask(L2_cache[set].data[k] + col, data, BURST_LEN, mask);
+	}
+
+*/
+
+
 }
 void l2write(hwaddr_t addr,size_t len,uint32_t data){
 	uint32_t offset=addr&BURST_MASK;
