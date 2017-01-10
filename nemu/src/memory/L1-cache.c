@@ -20,7 +20,7 @@ typedef struct{
 
 L1_cache l1cache;
 
-uint32_t l2read(hwaddr_t addr, size_t len);
+uint32_t l2read(hwaddr_t, size_t);
 
 void init_l1cache(){
 	int i,j;

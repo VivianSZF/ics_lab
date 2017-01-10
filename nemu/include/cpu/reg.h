@@ -75,8 +75,7 @@ typedef struct {
 			uint16_t ES,CS,SS,DS;
 		};
 	};
-	/*RSEG rseg[4];
-	SegDesc creg[4];*/
+
  	struct{
 		bool valid;
 		uint32_t base;

@@ -1,8 +1,6 @@
 #include "tlb.h"
-
+#include <stdio.h>
 void init_TLB(){
-	int i;
-	for(i=0;i<TLB_NUM;i++)
-		tlb[i].validbit=false;
+	memset(tlb,0,sizeof(tlb));
 }
 
