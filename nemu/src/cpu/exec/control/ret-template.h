@@ -20,6 +20,6 @@ static void do_execute(){
 
 
 make_instr_helper(n)
-make_instr_helper(i)
+make_instr_helper(si)
 
 #include "cpu/exec/template-end.h"

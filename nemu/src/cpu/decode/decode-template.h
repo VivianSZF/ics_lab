@@ -21,7 +21,7 @@ make_helper(concat(decode_i_, SUFFIX)) {
 	return DATA_BYTE;
  }
 
-#if DATA_BYTE == 1 || DATA_BYTE == 4
+
 /* sign immediate */
 make_helper(concat(decode_si_, SUFFIX)) {
 	op_src->type = OP_TYPE_IMM;
@@ -32,17 +32,19 @@ make_helper(concat(decode_si_, SUFFIX)) {
 	 *
 	op_src->simm = ???
 	 */
-	op_src->simm=(DATA_TYPE_S)instr_fetch(eip,DATA_BYTE);
-//	panic("please implement me");
-
-	op_src->val = op_src->simm;
+#if DATA_BYTE == 1
+	op_src->val = (int8_t)instr_fetch(eip, DATA_BYTE);
+#elif DATA_BYTE == 2
+	op_src->val = (int16_t)instr_fetch(eip, DATA_BYTE);
+#elif DATA_BYTE == 4
+	op_src->val = (int32_t)instr_fetch(eip, DATA_BYTE);
+#endif
 
 #ifdef DEBUG
 	snprintf(op_src->str, OP_STR_SIZE, "$0x%x", op_src->val);
 #endif
 	return DATA_BYTE;
 }
-#endif
 
 /* near */
 make_helper(concat(decode_n_, SUFFIX)) {

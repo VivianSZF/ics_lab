@@ -3,15 +3,16 @@
 #define instr movsx
 
 static void do_execute(){
-	DATA_TYPE num;
-	if(ops_decoded.opcode==0x01bf)
-		num=(((DATA_TYPE_S)op_src->val)<<16)>>16;
+
+	if(ops_decoded.opcode==0x01bf){
+		int16_t num=op_src->val;
+		REG(op_dest->reg)=num;
+	}	
 	else
 	{	
-		uint32_t t=(DATA_BYTE<<3)-8;
-		num=(((DATA_TYPE_S)op_src->val)<<t)>>t;
+		int8_t num=op_src->val;
+		REG(op_dest->reg)=num;
 	}
-	OPERAND_W(op_dest,num);
 	print_asm_template2();
 }
 

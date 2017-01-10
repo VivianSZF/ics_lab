@@ -12,7 +12,7 @@ static void do_execute(){
 		print_asm("ja %x",cpu.eip+op_src->val+len+1);
 	}
 }
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr jb
@@ -27,7 +27,7 @@ static void do_execute(){
 		print_asm("jb %x",cpu.eip+op_src->val+len+1);
 	}
 }
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr je
@@ -46,7 +46,7 @@ static void do_execute(){
 		print_asm("je %x",cpu.eip+op_src->val+1+len);
      }
 } 
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr jbe
@@ -65,7 +65,7 @@ static void do_execute(){
 		print_asm("jbe %x",cpu.eip+dis+len+1);
 	}
 }
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr jne
@@ -80,7 +80,7 @@ static void do_execute(){
 		print_asm("jne %x",cpu.eip+dis+len+1);
 	}
 } 
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr jns
@@ -95,7 +95,7 @@ static void do_execute(){
 		print_asm("jns %x",cpu.eip+dis+len+1);
 	}
 }
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr jle
@@ -110,7 +110,7 @@ static void do_execute(){
 		print_asm("jle %x",cpu.eip+dis+len+1);
  	}
 } 
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr jg
@@ -125,7 +125,7 @@ static void do_execute(){
 		print_asm("jg %x",cpu.eip+dis+len+1);
 	}
 }
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr jge
@@ -140,7 +140,7 @@ static void do_execute(){
 		print_asm("jge %x",cpu.eip+dis+len+1);
 	}
 }
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr jl
@@ -155,7 +155,7 @@ static void do_execute(){
 		print_asm("jl %x",cpu.eip+dis+len+1);
 	}
  } 
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr js
@@ -170,7 +170,7 @@ static void do_execute(){
 		print_asm("js %x",cpu.eip+dis+len+1);
 	}
  }
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #define instr jae
@@ -185,7 +185,7 @@ static void do_execute(){
 		print_asm("jae %x",cpu.eip+dis+len+1);
 	}
 }
-make_instr_helper(i)
+make_instr_helper(si)
 #undef instr
 
 #include "cpu/exec/template-end.h"
