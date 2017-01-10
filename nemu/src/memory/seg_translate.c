@@ -3,7 +3,7 @@
 #include "memory/memory.h"
 #include "../../lib-common/x86-inc/mmu.h"
 /*
-lnaddr_t seg_translate(swaddr_t addr,size_t len, uint8_t sreg){
+lnaddr_t seg_translate(swaddr_t addr, uint8_t sreg){
 	if(cpu.cr0.protect_enable==0)
 		return addr;
 	lnaddr_t lnaddr;
