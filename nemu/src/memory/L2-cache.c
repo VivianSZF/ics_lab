@@ -60,41 +60,20 @@ static void l2set_read(hwaddr_t addr, void*data){
 	uint32_t in=ad.index2;
 	uint32_t ta=ad.tag2;
 
-/*
-	uint32_t ans=hitornot(in,ta);
-	if(ans<16){
-		memcpy(data,l2cache[in].data[ans]+of,BURST_LEN);
-	}
-	else{
-		ans=fullornot(in);
-		if(ans>=8){
-			srand(time(0));
-			ans=rand()%WAY_SIZE;
-			write_back(in,ans);
-		}
-		l2cache[in].validbit[ans]=true;
-		l2cache[in].dirtybit[ans]=false;
-		l2cache[in].tag[ans]=ta;
-		int i;
-		for(i=0;i<BLOCK_SIZE;i++)
-			l2cache[in].data[ans][i]=dram_read((addr&(~MASK))+i,1);
-		memcpy(data,l2cache[in].data[ans]+of,BURST_LEN);
-		}
-*/
 	bool full=true;
 	bool find=false;
-	uint32_t row, k;
-	for (row=0; row<WAY_SIZE; row++) {
-		if (l2cache[in].validbit[row]) {
-			if (l2cache[in].tag[row]==ta) {
-				memcpy(data, l2cache[in].data[row]+of, BURST_LEN);
+	uint32_t i,k;
+	for (i=0; i<WAY_SIZE; i++) {
+		if (l2cache[in].validbit[i]) {
+			if (l2cache[in].tag[i]==ta) {
+				memcpy(data, l2cache[in].data[i]+of, BURST_LEN);
 				find=true;
 				break;
 			}
 		}
 		else {
 			full=false;
-			k=row;
+			k=i;
 		}
 	}
 	if (find==false) {
@@ -106,9 +85,9 @@ static void l2set_read(hwaddr_t addr, void*data){
 		l2cache[in].validbit[k]=true;
 		l2cache[in].dirtybit[k]=false;
 		l2cache[in].tag[k]=ta;
-		int i;
-		for(i=0;i<BLOCK_SIZE;i++)
-			l2cache[in].data[k][i]=dram_read((addr&(~MASK))+i,1);
+		int j;
+		for(j=0;j<BLOCK_SIZE;j++)
+			l2cache[in].data[k][j]=dram_read((addr&(~MASK))+j,1);
 		memcpy(data,l2cache[in].data[k]+of,BURST_LEN);
 
 	}
@@ -161,20 +140,20 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 	}
 	
 */
-	uint32_t row, k;
+	uint32_t i, k;
 	bool find=false, full=true;
-	for (row=0; row<WAY_SIZE; row++) {
-		if (l2cache[in].validbit[row]) {
-			if (l2cache[in].tag[row]==ta) {
-				memcpy_with_mask(l2cache[in].data[row] +of, data, BURST_LEN, mask);
+	for (i=0; i<WAY_SIZE; i++) {
+		if (l2cache[in].validbit[i]) {
+			if (l2cache[in].tag[i]==ta) {
+				memcpy_with_mask(l2cache[in].data[i] +of, data, BURST_LEN, mask);
 				find=true;
-				l2cache[in].dirtybit[row]=true;
+				l2cache[in].dirtybit[i]=true;
 				break;
 			}
 		}
 		else {
 			full=false;
-			k=row;
+			k=i;
 		}
 	}
 	if (find==false) {
@@ -186,9 +165,9 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 		l2cache[in].validbit[k]=true;
 		l2cache[in].dirtybit[k]=false;
 		l2cache[in].tag[k]=ta;
-		int i;
-		for(i=0;i<BLOCK_SIZE;i++)
-			l2cache[in].data[k][i]=dram_read((addr&(~MASK))+i,1);
+		int j;
+		for(j=0;j<BLOCK_SIZE;j++)
+			l2cache[in].data[k][j]=dram_read((addr&(~MASK))+j,1);
 
 		memcpy_with_mask(l2cache[in].data[k] +of, data, BURST_LEN, mask);
 	}
