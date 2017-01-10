@@ -20,7 +20,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	lnaddr.val=addr;
 	int i;
 	for(i=0;i<TLB_NUM;i++){
-		if(tlb[i].validbit&&(tlb[i].tag==(lnaddr.dir<<10)+lnaddr.page)){
+		if(tlb[i].validbit&&(tlb[i].tag==((lnaddr.dir<<10)+lnaddr.page))){
 			return (tlb[i].data<<12)+lnaddr.offset;
 		}
 	}
@@ -45,7 +45,7 @@ hwaddr_t page_translate(lnaddr_t addr){
 	}
 	int change;
 	if(isfull){
-		change=addr%TLB_NUM;
+		change=addr%0x3f;
 		tlb[change].validbit=true;
 		tlb[change].tag=(lnaddr.dir<<10)+lnaddr.page;
 		tlb[change].data=pagetable.page_frame;
