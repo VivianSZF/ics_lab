@@ -1,4 +1,5 @@
 #include "cache.h"
+#include<stdio.h>
 
 #define WAY_SIZE 8
 #define BLOCK_SIZE (1<<L1_OFFSET)
@@ -6,33 +7,24 @@
 #define MASK (BLOCK_SIZE-1)
 #define HW_MEM_SIZE (1<<27)
 
-typedef struct{ 
-	uint8_t d[BLOCK_SIZE];
-	uint32_t tag;
-	bool validbit;
-}LINE;
-typedef struct{
-	LINE line[WAY_SIZE];
-}SET;
-typedef struct{
-	SET set[INDEX_SIZE];
+typedef struct {
+	uint8_t data[WAY_SIZE][BLOCK_SIZE];
+	uint32_t tag[WAY_SIZE];
+	bool validbit[WAY_SIZE];
 }L1_cache;
 
-L1_cache l1cache;
+L1_cache l1cache[INDEX_SIZE];
 
 uint32_t l2read(hwaddr_t, size_t);
 
 void init_l1cache(){
-	int i,j;
-	for(i=0;i<INDEX_SIZE;i++)
-		for(j=0;j<WAY_SIZE;j++)
-			l1cache.set[i].line[j].validbit=false;
+	memset(l1cache,0,sizeof(l1cache));
 }
 
 static int hitornot(uint32_t index,uint32_t tag){
 	uint32_t i;
 	for(i=0;i<WAY_SIZE;i++){
-		if(l1cache.set[index].line[i].validbit&&l1cache.set[index].line[i].tag==tag)
+		if(l1cache[index].validbit[i]&&(l1cache[index].tag[i]==tag))
 				break;
   	}
 	return i;
@@ -41,7 +33,7 @@ static int hitornot(uint32_t index,uint32_t tag){
 static int fullornot(uint32_t index){
 	uint32_t i;
 	for(i=0;i<WAY_SIZE;i++){
-		if(!l1cache.set[index].line[i].validbit)
+		if(!l1cache[index].validbit[i])
 			break;
  	}
 	return i;
@@ -56,7 +48,7 @@ static void l1set_read(hwaddr_t addr, void*data){
 	uint32_t ta=ad.tag1;
 	uint32_t ans=hitornot(in,ta);
 	if(ans<8){
-		memcpy(data,l1cache.set[in].line[ans].d+of,BURST_LEN);
+		memcpy(data,l1cache[in].data[ans]+of,BURST_LEN);
  	}
 	else{
 		ans=fullornot(in);
@@ -64,12 +56,12 @@ static void l1set_read(hwaddr_t addr, void*data){
 			srand(time(0));
 			ans=rand()%WAY_SIZE;
 		}
-		l1cache.set[in].line[ans].validbit=true;
-		l1cache.set[in].line[ans].tag=ta;
+		l1cache[in].validbit[ans]=true;
+		l1cache[in].tag[ans]=ta;
 		int i;
 		for(i=0;i<BLOCK_SIZE;i++)
-			l1cache.set[in].line[ans].d[i]=l2read((addr&(~MASK))+i,1);
-		memcpy(data,l1cache.set[in].line[ans].d+of,BURST_LEN);
+			l1cache[in].data[ans][i]=l2read((addr&(~MASK))+i,1);
+		memcpy(data,l1cache[in].data[ans]+of,BURST_LEN);
  		}
 } 
 uint32_t l1read(hwaddr_t addr,size_t len){
@@ -91,7 +83,7 @@ static void l1set_write(hwaddr_t addr,void *data,uint8_t *mask){
 	uint32_t ta=ad.tag1;
 	uint32_t ans=hitornot(in,ta);
  	if(ans<8){
-		memcpy_with_mask(l1cache.set[in].line[ans].d+of,data,BURST_LEN,mask);
+		memcpy_with_mask(l1cache[in].data[ans]+of,data,BURST_LEN,mask);
 	}
 	return;
 }
