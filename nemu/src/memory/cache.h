@@ -6,11 +6,11 @@
 
 #define L1_OFFSET 6
 #define L1_INDEX 7
-#define L1_TAG (32-L1_OFFSET-L1_INDEX)
+#define L1_TAG (27-L1_OFFSET-L1_INDEX)
 
 #define L2_OFFSET 6
 #define L2_INDEX 12
-#define L2_TAG (32-L2_OFFSET-L2_INDEX)
+#define L2_TAG (27-L2_OFFSET-L2_INDEX)
 
 typedef union{
 	struct{
