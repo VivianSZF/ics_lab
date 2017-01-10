@@ -11,7 +11,7 @@ void init_regex();
 void init_wp_pool();
 void init_ddr3();
 void init_l1cache();
-//void init_l2cache();
+void init_l2cache();
 void init_TLB();
 void init_device();
 void init_sdl();
@@ -123,7 +123,7 @@ static void load_entry() {
 
 	/*Initialize cache. */
 	init_l1cache();
-	//init_l2cache();
+	init_l2cache();
 
 	/*Initialize CR0*/
 	init_CR0();

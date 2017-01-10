@@ -31,10 +31,10 @@ static void l1set_read(hwaddr_t addr, void*data){
 	
 	bool full=true;
 	bool find=false;
-	uint32_t i, k;
-	for (i=0; i<WAY_SIZE; i++) {
-		if (l1cache[in].validbit[i]) {
-			if (l1cache[in].tag[i]==ta) {
+	uint32_t i,k;
+	for (i=0; i<WAY_SIZE; i++){
+		if (l1cache[in].validbit[i]){
+			if (l1cache[in].tag[i]==ta){
 				memcpy(data, l1cache[in].data[i]+of, BURST_LEN);
 				find=true;
 				break;
@@ -56,7 +56,7 @@ static void l1set_read(hwaddr_t addr, void*data){
 		for (j=0; j<BLOCK_SIZE; j++) {
 			l1cache[in].data[k][j]=l2read((addr & (~MASK))+j, 1);
 		}
-		memcpy(data, l1cache[in].data[k]+of, BURST_LEN);
+		memcpy(data,l1cache[in].data[k]+of, BURST_LEN);
 	}
 
 } 

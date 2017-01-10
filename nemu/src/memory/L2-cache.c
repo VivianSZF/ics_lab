@@ -15,11 +15,10 @@ typedef struct {
 } L2_cache;
 
 
-
 L2_cache l2cache[INDEX_SIZE];
 
-uint32_t dram_read(hwaddr_t addr, size_t len);
-void dram_write(hwaddr_t addr, size_t len, uint32_t data);
+uint32_t dram_read(hwaddr_t, size_t);
+void dram_write(hwaddr_t, size_t, uint32_t);
 
 void init_l2cache(){
 	memset(l2cache, 0, sizeof(l2cache));
@@ -60,24 +59,24 @@ static void l2set_read(hwaddr_t addr, void*data){
 	uint32_t in=ad.index2;
 	uint32_t ta=ad.tag2;
 
-	bool full=true;
+	bool isfull=true;
 	bool find=false;
 	uint32_t i,k;
-	for (i=0; i<WAY_SIZE; i++) {
-		if (l2cache[in].validbit[i]) {
-			if (l2cache[in].tag[i]==ta) {
+	for (i=0;i<WAY_SIZE;i++){
+		if (l2cache[in].validbit[i]){
+			if (l2cache[in].tag[i]==ta){
 				memcpy(data, l2cache[in].data[i]+of, BURST_LEN);
 				find=true;
 				break;
 			}
 		}
 		else {
-			full=false;
+			isfull=false;
 			k=i;
 		}
 	}
-	if (find==false) {
-		if (full) { 
+	if (find==false){
+		if (isfull){ 
 			srand(time(0));
 			k=rand()%WAY_SIZE;
 			write_back(in, k);
@@ -91,11 +90,6 @@ static void l2set_read(hwaddr_t addr, void*data){
 		memcpy(data,l2cache[in].data[k]+of,BURST_LEN);
 
 	}
-
-
-
-
-
 
 } 
 uint32_t l2read(hwaddr_t addr,size_t len){
@@ -115,7 +109,6 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 	uint32_t of=ad.offset2;
 	uint32_t in=ad.index2;
 	uint32_t ta=ad.tag2;
-
 
 /*	
 	uint32_t ans=hitornot(in,ta);
@@ -140,8 +133,9 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 	}
 	
 */
-	uint32_t i, k;
-	bool find=false, full=true;
+	uint32_t i,k;
+	bool find=false;
+	bool isfull=true;
 	for (i=0; i<WAY_SIZE; i++) {
 		if (l2cache[in].validbit[i]) {
 			if (l2cache[in].tag[i]==ta) {
@@ -152,12 +146,12 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 			}
 		}
 		else {
-			full=false;
+			isfull=false;
 			k=i;
 		}
 	}
-	if (find==false) {
-		if (full) {
+	if (find==false){
+		if (isfull){
 			srand(time(0));
 			k=rand()%WAY_SIZE;
 			write_back(in, k);
@@ -168,14 +162,11 @@ static void l2set_write(hwaddr_t addr,void *data,uint8_t *mask){
 		int j;
 		for(j=0;j<BLOCK_SIZE;j++)
 			l2cache[in].data[k][j]=dram_read((addr&(~MASK))+j,1);
-
 		memcpy_with_mask(l2cache[in].data[k] +of, data, BURST_LEN, mask);
 	}
 
-
-
-
 }
+
 void l2write(hwaddr_t addr,size_t len,uint32_t data){
 	uint32_t offset=addr&BURST_MASK;
 	uint8_t temp[2*BURST_LEN];
